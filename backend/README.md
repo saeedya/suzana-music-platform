@@ -70,3 +70,9 @@ mypy app/        # type check
 - Authentication via JWT (HS256)
 - Tokens expire after 30 minutes
 - `/docs` disabled in production
+
+## Models
+
+| Model | Description |
+|-------|-------------|
+| `Instrument` | Cello · Piano · Guitar · Music Theory |
