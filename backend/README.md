@@ -73,6 +73,8 @@ mypy app/        # type check
 - Row Level Security (RLS) enabled on all tables
   - `instruments`: public read, admin-only write
   - `users`: users can only access their own row
+  - `alembic_version`: fully restricted
+- `anon` role revoked from all tables
 
 ## Models
 
