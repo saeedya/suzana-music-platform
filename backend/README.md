@@ -63,3 +63,10 @@ mypy app/        # type check
 | GET | `/api/v1/health` | Health check |
 
 > Swagger UI available at `/docs` in development only.
+
+## Security
+
+- Passwords hashed with `bcrypt`
+- Authentication via JWT (HS256)
+- Tokens expire after 30 minutes
+- `/docs` disabled in production
