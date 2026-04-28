@@ -76,3 +76,4 @@ mypy app/        # type check
 | Model | Description |
 |-------|-------------|
 | `Instrument` | Cello · Piano · Guitar · Music Theory |
+| `User` | Students and admin (Suzana) |
