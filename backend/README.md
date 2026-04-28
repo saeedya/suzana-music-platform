@@ -77,3 +77,16 @@ mypy app/        # type check
 |-------|-------------|
 | `Instrument` | Cello · Piano · Guitar · Music Theory |
 | `User` | Students and admin (Suzana) |
+
+## Database Migrations
+
+```bash
+# Create a new migration
+alembic revision --autogenerate -m "description"
+
+# Apply migrations
+alembic upgrade head
+
+# Rollback one migration
+alembic downgrade -1
+```
