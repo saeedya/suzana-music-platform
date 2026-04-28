@@ -70,6 +70,9 @@ mypy app/        # type check
 - Authentication via JWT (HS256)
 - Tokens expire after 30 minutes
 - `/docs` disabled in production
+- Row Level Security (RLS) enabled on all tables
+  - `instruments`: public read, admin-only write
+  - `users`: users can only access their own row
 
 ## Models
 
