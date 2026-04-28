@@ -1,9 +1,9 @@
+# Backend — Suzana Music Platform
+
 ![Python](https://img.shields.io/badge/python-3.12-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.111-green)
 ![Pytest](https://img.shields.io/badge/tested--with-pytest-orange)
 ![Status](https://img.shields.io/badge/status-in--progress-yellow)
-
-# Backend — Suzana Music Platform
 
 REST API built with FastAPI and Python.
 
@@ -55,3 +55,11 @@ pytest --cov=app tests/       # with coverage
 ruff check app/  # lint
 mypy app/        # type check
 ```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/health` | Health check |
+
+> Swagger UI available at `/docs` in development only.
