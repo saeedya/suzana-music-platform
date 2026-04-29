@@ -83,12 +83,12 @@ mypy app/        # type check
   - `alembic_version`: fully restricted
 - `anon` role revoked from all tables
 
-## Models
+## Models & Schemas
 
-| Model | Description |
-|-------|-------------|
-| `Instrument` | Cello · Piano · Guitar · Music Theory |
-| `User` | Students and admin (Suzana) |
+| Model | Schema | Description |
+|-------|--------|-------------|
+| `Instrument` | `InstrumentCreate`, `InstrumentResponse` | Cello · Piano · Guitar · Music Theory |
+| `User` | `UserCreate`, `UserResponse` | Students and admin (Suzana) |
 
 ## Database Migrations
 
