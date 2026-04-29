@@ -4,6 +4,7 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.111-green)
 ![Pytest](https://img.shields.io/badge/tested--with-pytest-orange)
 ![Status](https://img.shields.io/badge/status-in--progress-yellow)
+![CI](https://github.com/saeedya/suzana-music-platform/actions/workflows/ci.yml/badge.svg)
 
 REST API built with FastAPI and Python.
 
@@ -105,3 +106,10 @@ alembic downgrade -1
 
 - Development: colorized console output (DEBUG level)
 - Production: JSON format (INFO level) — compatible with Grafana
+
+## Docker
+
+```bash
+docker build -t backend .
+docker run -p 8000:8000 --env-file .env backend
+```
