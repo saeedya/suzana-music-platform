@@ -15,6 +15,7 @@ REST API built with FastAPI and Python.
 - PostgreSQL
 - SQLAlchemy (ORM)
 - Alembic (migrations)
+- Supabase (Auth + Database)
 - Pytest (testing)
 
 ## Structure
@@ -22,7 +23,12 @@ REST API built with FastAPI and Python.
 ```
 app/
 ├── api/          # route handlers
-├── core/         # config, security, database
+├── core/
+│   ├── config.py      # settings
+│   ├── database.py    # SQLAlchemy engine
+│   ├── logging.py     # loguru setup
+│   ├── security.py    # JWT + bcrypt
+│   └── supabase.py    # Supabase client
 ├── models/       # SQLAlchemy models
 ├── schemas/      # Pydantic schemas
 └── services/     # business logic
