@@ -4,7 +4,7 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.111-green)
 ![Pytest](https://img.shields.io/badge/tested--with-pytest-orange)
 ![Status](https://img.shields.io/badge/status-in--progress-yellow)
-![CI](https://github.com/saeedya/suzana-music-platform/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/saeedya/suzana-music-platform/actions/workflows/ci.yaml/badge.svg)
 
 REST API built with FastAPI and Python.
 
