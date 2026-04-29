@@ -2,9 +2,12 @@ import pytest
 from pydantic import ValidationError
 
 
-def test_settings_requires_secret_key():
+def test_settings_requires_secret_key(monkeypatch):
     """secret_key is required — app must not start without it."""
     from pydantic_settings import BaseSettings, SettingsConfigDict
+
+    monkeypatch.delenv("SECRET_KEY", raising=False)
+    monkeypatch.delenv("DATABASE_URL", raising=False)
 
     class TestSettings(BaseSettings):
         model_config = SettingsConfigDict(env_file=None)
@@ -15,9 +18,12 @@ def test_settings_requires_secret_key():
         TestSettings()
 
 
-def test_settings_requires_database_url():
+def test_settings_requires_database_url(monkeypatch):
     """database_url is required — app must not start without it."""
     from pydantic_settings import BaseSettings, SettingsConfigDict
+
+    monkeypatch.setenv("SECRET_KEY", "test-secret")
+    monkeypatch.delenv("DATABASE_URL", raising=False)
 
     class TestSettings(BaseSettings):
         model_config = SettingsConfigDict(env_file=None)
