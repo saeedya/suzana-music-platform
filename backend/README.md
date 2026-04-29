@@ -68,6 +68,11 @@ mypy app/        # type check
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/v1/health` | Health check |
+| GET | `/api/v1/instruments/` | List all instruments |
+| GET | `/api/v1/instruments/{slug}` | Get instrument by slug |
+| POST | `/api/v1/auth/signup` | Sign up |
+| POST | `/api/v1/auth/signin` | Sign in |
+| POST | `/api/v1/auth/signout` | Sign out |
 
 > Swagger UI available at `/docs` in development only.
 
@@ -83,12 +88,19 @@ mypy app/        # type check
   - `alembic_version`: fully restricted
 - `anon` role revoked from all tables
 
-## Models
+## Models & Schemas
 
-| Model | Description |
-|-------|-------------|
-| `Instrument` | Cello · Piano · Guitar · Music Theory |
-| `User` | Students and admin (Suzana) |
+| Model | Schema | Description |
+|-------|--------|-------------|
+| `Instrument` | `InstrumentCreate`, `InstrumentResponse` | Cello · Piano · Guitar · Music Theory |
+| `User` | `UserCreate`, `UserResponse` | Students and admin (Suzana) |
+
+## Services
+
+| Service | Description |
+|---------|-------------|
+| `instrument_service` | get all, get by slug, create |
+| `auth_service` | sign up, sign in, sign out, get user (Supabase) |
 
 ## Database Migrations
 
