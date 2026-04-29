@@ -100,3 +100,8 @@ alembic downgrade -1
 
 - RLS policies use `(select ...)` to avoid per-row re-evaluation
 - Indexes: `idx_users_id`, `idx_users_is_admin`, `idx_instruments_slug`
+
+## Logging
+
+- Development: colorized console output (DEBUG level)
+- Production: JSON format (INFO level) — compatible with Grafana
