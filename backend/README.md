@@ -90,6 +90,13 @@ mypy app/        # type check
 | `Instrument` | `InstrumentCreate`, `InstrumentResponse` | Cello · Piano · Guitar · Music Theory |
 | `User` | `UserCreate`, `UserResponse` | Students and admin (Suzana) |
 
+## Services
+
+| Service | Description |
+|---------|-------------|
+| `instrument_service` | get all, get by slug, create |
+| `auth_service` | sign up, sign in, sign out, get user (Supabase) |
+
 ## Database Migrations
 
 ```bash
