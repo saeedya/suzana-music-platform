@@ -138,3 +138,26 @@ docker run -p 8000:8000 --env-file .env backend
 ```bash
 PYTHONPATH=. venv/bin/python app/core/seed.py
 ```
+
+## Local development
+
+### With Docker (recommended)
+
+```bash
+docker compose up --build
+```
+
+- Backend: http://localhost:8000
+- API docs: http://localhost:8000/docs
+
+### Without Docker
+
+```bash
+# Start Supabase
+supabase start
+
+# Start FastAPI
+cd backend
+source venv/bin/activate
+uvicorn app.main:app --reload
+```
