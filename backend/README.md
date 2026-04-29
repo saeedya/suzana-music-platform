@@ -95,3 +95,8 @@ alembic upgrade head
 # Rollback one migration
 alembic downgrade -1
 ```
+
+## Performance
+
+- RLS policies use `(select ...)` to avoid per-row re-evaluation
+- Indexes: `idx_users_id`, `idx_users_is_admin`, `idx_instruments_slug`
