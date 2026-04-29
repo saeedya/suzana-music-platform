@@ -56,6 +56,9 @@ def test_settings_reads_from_env(monkeypatch):
     monkeypatch.setenv("SECRET_KEY", "my-secret")
     monkeypatch.setenv("DATABASE_URL", "postgresql://localhost/test")
     monkeypatch.setenv("APP_ENV", "production")
+    monkeypatch.setenv("SUPABASE_URL", "http://localhost:54321")
+    monkeypatch.setenv("SUPABASE_ANON_KEY", "test-anon-key")
+    monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", "test-service-key")
 
     from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -64,8 +67,12 @@ def test_settings_reads_from_env(monkeypatch):
         app_env: str = "development"
         secret_key: str
         database_url: str
+        supabase_url: str
+        supabase_anon_key: str
+        supabase_service_role_key: str
 
     s = TestSettings()
     assert s.secret_key == "my-secret"
     assert s.database_url == "postgresql://localhost/test"
     assert s.app_env == "production"
+    assert s.supabase_url == "http://localhost:54321"

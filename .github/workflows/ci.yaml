@@ -56,4 +56,7 @@ jobs:
           APP_ENV: development
           SECRET_KEY: test-secret-key
           DATABASE_URL: postgresql://postgres:postgres@localhost:54322/postgres
+          SUPABASE_URL: http://localhost:54321
+          SUPABASE_ANON_KEY: test-anon-key
+          SUPABASE_SERVICE_ROLE_KEY: test-service-role-key
         run: pytest tests/unit/ --cov=app --cov-report=term-missing
