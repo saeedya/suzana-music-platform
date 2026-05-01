@@ -10,17 +10,31 @@ def upgrade() -> None:
     # Secure alembic_version
     op.execute("ALTER TABLE alembic_version ENABLE ROW LEVEL SECURITY;")
 
-    # Revoke anon and authenticated access from all tables
-    op.execute("REVOKE ALL ON TABLE instruments FROM anon, authenticated;")
-    op.execute("REVOKE ALL ON TABLE users FROM anon, authenticated;")
-    op.execute("REVOKE ALL ON TABLE alembic_version FROM anon, authenticated;")
-
-    # Grant read-only access to instruments for authenticated users
-    op.execute("GRANT SELECT ON TABLE instruments TO authenticated;")
+    # Only run on Supabase (roles exist)
+    op.execute("""
+        DO $$
+        BEGIN
+            IF EXISTS (SELECT FROM pg_roles WHERE rolname = 'anon') THEN
+                REVOKE ALL ON TABLE instruments FROM anon, authenticated;
+                REVOKE ALL ON TABLE users FROM anon, authenticated;
+                REVOKE ALL ON TABLE alembic_version FROM anon, authenticated;
+                GRANT SELECT ON TABLE instruments TO authenticated;
+            END IF;
+        END
+        $$;
+    """)
 
 
 def downgrade() -> None:
-    op.execute("GRANT ALL ON TABLE instruments TO anon, authenticated;")
-    op.execute("GRANT ALL ON TABLE users TO anon, authenticated;")
-    op.execute("GRANT ALL ON TABLE alembic_version TO anon, authenticated;")
+    op.execute("""
+        DO $$
+        BEGIN
+            IF EXISTS (SELECT FROM pg_roles WHERE rolname = 'anon') THEN
+                GRANT ALL ON TABLE instruments TO anon, authenticated;
+                GRANT ALL ON TABLE users TO anon, authenticated;
+                GRANT ALL ON TABLE alembic_version TO anon, authenticated;
+            END IF;
+        END
+        $$;
+    """)
     op.execute("ALTER TABLE alembic_version DISABLE ROW LEVEL SECURITY;")
