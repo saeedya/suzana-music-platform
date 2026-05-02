@@ -33,5 +33,8 @@ class Settings(BaseSettings):
     resend_api_key: str
     resend_from_email: str = "onboarding@resend.dev"
 
+    # Email
+    teacher_email: str
+
 
 settings = Settings()

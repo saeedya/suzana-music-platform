@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Header, HTTPException, Request
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.core.database import get_db
 from app.core.dependencies import get_current_user
 from app.models.booking import Booking
@@ -101,7 +102,7 @@ async def webhook(
             )
 
             send_booking_confirmation_suzana(
-                suzana_email="suzana@example.com",
+                suzana_email=settings.teacher_email,
                 student_name=booking.student.full_name,
                 student_email=booking.student.email,
                 instrument=booking.instrument.name,
