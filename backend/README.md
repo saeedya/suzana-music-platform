@@ -85,6 +85,8 @@ mypy app/        # type check
 | GET | `/api/v1/bookings/` | Admin | All bookings |
 | GET | `/api/v1/bookings/{id}` | Admin | Get booking |
 | PATCH | `/api/v1/bookings/{id}/cancel` | Yes | Cancel booking |
+| POST | `/api/v1/payments/create-intent` | Yes | Create payment intent |
+| POST | `/api/v1/payments/webhook` | No | Stripe webhook |
 
 > Swagger UI available at `/docs` in development only.
 
@@ -117,6 +119,8 @@ mypy app/        # type check
 | `auth_service` | sign up, sign in, sign out, get user (Supabase) |
 | `course_service` | get all, get by instrument, get by slug, create, update, soft delete |
 | `booking_service` | create, get by student, get all, get by id, cancel |
+| `payment_service` | create PaymentIntent, refund, webhook verification |
+| `daily_service` | create room, delete room (Daily.co) |
 
 ## Database Migrations
 

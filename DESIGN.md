@@ -59,7 +59,7 @@ Suzana is a professional musician with 30+ years of experience. This platform al
 | Service | Purpose |
 |---------|---------|
 | Stripe | Payments |
-| Daily.co | Live video lessons |
+| Daily.co | Live video lessons — room created after payment confirmed |
 | Resend | Transactional email |
 | Cloudflare R2 | Video storage + backups |
 
@@ -154,6 +154,8 @@ All endpoints prefixed with `/api/v1/`.
 | GET | `/api/v1/bookings/` | Admin | All bookings |
 | GET | `/api/v1/bookings/{id}` | Admin | Get booking |
 | PATCH | `/api/v1/bookings/{id}/cancel` | Yes | Cancel booking |
+| POST | `/api/v1/payments/create-intent` | Yes | Create payment intent |
+| POST | `/api/v1/payments/webhook` | No | Stripe webhook |
 
 
 ### Planned endpoints
@@ -165,6 +167,8 @@ All endpoints prefixed with `/api/v1/`.
 | POST | `/api/v1/subscriptions/` | Yes | Create subscription |
 | GET | `/api/v1/dashboard/bookings` | Yes | My bookings |
 | GET | `/api/v1/dashboard/courses` | Yes | My courses |
+| POST | `/api/v1/payments/create-intent` | Yes | Create payment |
+| POST | `/api/v1/payments/webhook` | No | Stripe webhook |
 
 ---
 
@@ -255,7 +259,7 @@ All endpoints prefixed with `/api/v1/`.
 
 ## 8. Testing Strategy
 
-### Unit tests (133 tests · 100% coverage)
+### Unit tests (149 tests · 100% coverage)
 - Mock all external dependencies (DB, Supabase, Stripe)
 - Fast — run in under 5 seconds
 - Run on every push
