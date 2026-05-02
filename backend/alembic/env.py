@@ -4,11 +4,11 @@ from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 from app.core.config import settings
-from app.core.database import Base
+from app.core.database import Base, get_database_url
 from app.models import Instrument, User  # noqa: F401
 
 config = context.config
-config.set_main_option("sqlalchemy.url", settings.database_url)
+config.set_main_option("sqlalchemy.url", get_database_url())
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
@@ -38,6 +38,7 @@ def run_migrations_online() -> None:
         context.configure(
             connection=connection,
             target_metadata=target_metadata,
+            compare_indexes=False,
         )
         with context.begin_transaction():
             context.run_migrations()

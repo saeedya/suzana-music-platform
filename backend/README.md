@@ -74,6 +74,12 @@ mypy app/        # type check
 | POST | `/api/v1/auth/signup` | Sign up |
 | POST | `/api/v1/auth/signin` | Sign in |
 | POST | `/api/v1/auth/signout` | Sign out |
+| GET | `/api/v1/courses/` | No | List published courses |
+| GET | `/api/v1/courses/{slug}` | No | Course detail |
+| GET | `/api/v1/courses/instrument/{id}` | No | Courses by instrument |
+| POST | `/api/v1/courses/` | Admin | Create course |
+| PATCH | `/api/v1/courses/{slug}` | Admin | Update course |
+| DELETE | `/api/v1/courses/{slug}` | Admin | Soft delete course |
 
 > Swagger UI available at `/docs` in development only.
 
@@ -95,6 +101,7 @@ mypy app/        # type check
 |-------|--------|-------------|
 | `Instrument` | `InstrumentCreate`, `InstrumentResponse` | Cello · Piano · Guitar · Music Theory |
 | `User` | `UserCreate`, `UserResponse` | Students and admin (Suzana) |
+| `Course` | `CourseCreate`, `CourseResponse`, `CourseUpdate` | Recorded courses per instrument |
 
 ## Services
 
@@ -102,6 +109,7 @@ mypy app/        # type check
 |---------|-------------|
 | `instrument_service` | get all, get by slug, create |
 | `auth_service` | sign up, sign in, sign out, get user (Supabase) |
+| `course_service` | get all, get by instrument, get by slug, create, update, soft delete |
 
 ## Database Migrations
 
