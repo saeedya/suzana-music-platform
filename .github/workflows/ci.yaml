@@ -85,6 +85,7 @@ jobs:
           DAILY_API_URL: https://api.daily.co/v1
           RESEND_API_KEY: re_placeholder
           RESEND_FROM_EMAIL: onboarding@resend.dev
+          TEACHER_EMAIL: me@me.com
         run: pytest tests/unit/ --cov=app --cov-report=term-missing
   
   security:
@@ -156,6 +157,7 @@ jobs:
           DAILY_API_URL: https://api.daily.co/v1
           RESEND_API_KEY: re_placeholder
           RESEND_FROM_EMAIL: onboarding@resend.dev
+          TEACHER_EMAIL: me@me.com
         run: alembic upgrade head
 
       - name: Run integration tests
@@ -174,6 +176,7 @@ jobs:
           DAILY_API_URL: https://api.daily.co/v1       
           RESEND_API_KEY: re_placeholder
           RESEND_FROM_EMAIL: onboarding@resend.dev
+          TEACHER_EMAIL: me@me.com
         run: pytest tests/integration/ -v
   
   build-and-push:
