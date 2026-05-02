@@ -1,7 +1,7 @@
 # Design Document — Suzana Music Platform
 
-> Version: 1.0.0
-> Last updated: 2026-04-30
+> Version: 1.1.0
+> Last updated: 2026-05-02
 > Status: In progress
 
 ---
@@ -23,16 +23,17 @@ Suzana is a professional musician with 30+ years of experience. This platform al
 | Tool | Version | Purpose |
 |------|---------|---------|
 | Python | 3.12 | Language |
-| FastAPI | 0.111 | API framework |
+| FastAPI | 0.136 | API framework |
 | SQLAlchemy | 2.0 | ORM |
 | Alembic | 1.13 | DB migrations |
-| Pydantic | 2.7 | Data validation |
+| Pydantic | 2.13 | Data validation |
 | pydantic-settings | 2.2 | Config from .env |
 | psycopg | 3.1 | PostgreSQL driver |
 | bcrypt | 4.1 | Password hashing |
-| python-jose | 3.3 | JWT tokens |
+| PyJWT | 2.12 | JWT tokens |
 | loguru | 0.7 | Logging |
 | supabase | 2.4 | Auth + DB client |
+| resend | 2.29 | Transactional Email |
 
 ### Frontend (coming soon)
 | Tool | Version | Purpose |
@@ -162,13 +163,9 @@ All endpoints prefixed with `/api/v1/`.
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
 | GET | `/api/v1/bookings/availability` | No | Available slots |
-| POST | `/api/v1/payments/create-intent` | Yes | Create payment |
-| POST | `/api/v1/payments/webhook` | No | Stripe webhook |
 | POST | `/api/v1/subscriptions/` | Yes | Create subscription |
 | GET | `/api/v1/dashboard/bookings` | Yes | My bookings |
 | GET | `/api/v1/dashboard/courses` | Yes | My courses |
-| POST | `/api/v1/payments/create-intent` | Yes | Create payment |
-| POST | `/api/v1/payments/webhook` | No | Stripe webhook |
 
 ---
 
@@ -259,7 +256,7 @@ All endpoints prefixed with `/api/v1/`.
 
 ## 8. Testing Strategy
 
-### Unit tests (149 tests · 100% coverage)
+### Unit tests (151 tests · 100% coverage)
 - Mock all external dependencies (DB, Supabase, Stripe)
 - Fast — run in under 5 seconds
 - Run on every push
