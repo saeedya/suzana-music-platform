@@ -120,6 +120,7 @@ mypy app/        # type check
 | `course_service` | get all, get by instrument, get by slug, create, update, soft delete |
 | `booking_service` | create, get by student, get all, get by id, cancel |
 | `payment_service` | create PaymentIntent, refund, webhook verification |
+| `daily_service` | create room, delete room (Daily.co) |
 
 ## Database Migrations
 

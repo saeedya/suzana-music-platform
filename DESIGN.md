@@ -59,7 +59,7 @@ Suzana is a professional musician with 30+ years of experience. This platform al
 | Service | Purpose |
 |---------|---------|
 | Stripe | Payments |
-| Daily.co | Live video lessons |
+| Daily.co | Live video lessons — room created after payment confirmed |
 | Resend | Transactional email |
 | Cloudflare R2 | Video storage + backups |
 
@@ -259,7 +259,7 @@ All endpoints prefixed with `/api/v1/`.
 
 ## 8. Testing Strategy
 
-### Unit tests (146 tests · 100% coverage)
+### Unit tests (149 tests · 100% coverage)
 - Mock all external dependencies (DB, Supabase, Stripe)
 - Fast — run in under 5 seconds
 - Run on every push

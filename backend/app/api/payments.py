@@ -6,6 +6,7 @@ from app.core.database import get_db
 from app.core.dependencies import get_current_user
 from app.models.booking import Booking
 from app.models.user import User
+from app.services.daily_service import create_room
 from app.services.payment_service import (
     construct_webhook_event,
     create_payment_intent,
@@ -74,6 +75,11 @@ async def webhook(
         ).first()
         if booking:
             booking.status = "confirmed"
+            room_url = create_room(
+                str(booking.id),
+                booking.ends_at.timestamp(),
+            )
+            booking.daily_room_url = room_url
             db.commit()
 
     return {"status": "ok"}
