@@ -102,6 +102,7 @@ mypy app/        # type check
 | `Instrument` | `InstrumentCreate`, `InstrumentResponse` | Cello · Piano · Guitar · Music Theory |
 | `User` | `UserCreate`, `UserResponse` | Students and admin (Suzana) |
 | `Course` | `CourseCreate`, `CourseResponse`, `CourseUpdate` | Recorded courses per instrument |
+| `Booking` | `BookingCreate`, `BookingResponse`, `BookingStatusUpdate` | Private lesson bookings |
 
 ## Services
 
