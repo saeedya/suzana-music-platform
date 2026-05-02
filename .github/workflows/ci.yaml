@@ -166,6 +166,8 @@ jobs:
           STRIPE_SECRET_KEY: sk_test_placeholder
           STRIPE_PUBLISHABLE_KEY: pk_test_placeholder
           STRIPE_WEBHOOK_SECRET: whsec_placeholder
+          DAILY_API_KEY: d_placeholder
+          DAILY_API_URL: https://api.daily.co/v1       
         run: pytest tests/integration/ -v
   
   build-and-push:
