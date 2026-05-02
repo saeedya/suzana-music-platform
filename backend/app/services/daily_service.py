@@ -3,7 +3,7 @@ import httpx
 from app.core.config import settings
 
 
-def create_room(booking_id: str, expires_at: float) -> str:
+def create_room(booking_id: str, starts_at: float, ends_at: float) -> str:
     """Create a Daily.co room and return the room URL."""
     headers = {
         "Authorization": f"Bearer {settings.daily_api_key}",
@@ -12,7 +12,8 @@ def create_room(booking_id: str, expires_at: float) -> str:
     payload = {
         "name": f"booking-{booking_id}",
         "properties": {
-            "exp": int(expires_at),
+            "nbf": int(starts_at) - 300,   # 5 min before
+            "exp": int(ends_at) + 300,     # 5 min after
             "max_participants": 2,
             "enable_chat": True,
             "enable_screenshare": True,

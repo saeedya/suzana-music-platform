@@ -8,7 +8,7 @@ def test_create_room_success():
         mock_response.json.return_value = {"url": "https://suzana-music.daily.co/booking-abc123"}
         mock_post.return_value = mock_response
 
-        result = create_room("abc123", 1234567890.0)
+        result = create_room("abc123", 1234567890.0, 1234571490.0)
 
         assert result == "https://suzana-music.daily.co/booking-abc123"
         mock_post.assert_called_once()
@@ -21,12 +21,14 @@ def test_create_room_calls_correct_endpoint():
         mock_response.json.return_value = {"url": "https://suzana-music.daily.co/booking-abc"}
         mock_post.return_value = mock_response
 
-        create_room("abc", 1234567890.0)
+        create_room("abc", 1234567890.0, 1234571490.0)
 
         call_kwargs = mock_post.call_args
         assert "rooms" in call_kwargs[0][0]
         assert call_kwargs[1]["json"]["name"] == "booking-abc"
         assert call_kwargs[1]["json"]["properties"]["max_participants"] == 2
+        assert call_kwargs[1]["json"]["properties"]["nbf"] == 1234567890 - 300
+        assert call_kwargs[1]["json"]["properties"]["exp"] == 1234571490 + 300
 
 
 def test_delete_room_success():

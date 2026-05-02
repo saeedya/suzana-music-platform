@@ -77,6 +77,7 @@ async def webhook(
             booking.status = "confirmed"
             room_url = create_room(
                 str(booking.id),
+                booking.starts_at.timestamp(),
                 booking.ends_at.timestamp(),
             )
             booking.daily_room_url = room_url
