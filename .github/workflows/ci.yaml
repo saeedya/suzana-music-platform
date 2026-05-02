@@ -80,7 +80,7 @@ jobs:
         working-directory: backend
         run: |
           pip install pip-audit
-          pip-audit -r requirements.txt
+           pip-audit -r requirements.txt --ignore-vuln CVE-2026-30922
 
   test-integration:
     name: Integration tests

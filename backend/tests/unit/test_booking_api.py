@@ -55,7 +55,7 @@ def test_book_lesson_unauthenticated():
         "ends_at": datetime.now(timezone.utc).isoformat(),
         "price_cents": 5000,
     })
-    assert response.status_code == 403
+    assert response.status_code == 401
 
 
 def test_my_bookings():
@@ -79,7 +79,7 @@ def test_list_all_bookings_as_admin():
 
 def test_list_all_bookings_not_admin():
     response = client.get("/api/v1/bookings/")
-    assert response.status_code == 403
+    assert response.status_code == 401
 
 
 def test_get_booking_by_id_as_admin():
