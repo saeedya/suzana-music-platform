@@ -8,6 +8,7 @@ from app.core.database import Base
 
 if TYPE_CHECKING:
     from app.models.course import Course
+    from app.models.booking import Booking
 
 
 class Instrument(Base):
@@ -21,4 +22,7 @@ class Instrument(Base):
 
     courses: Mapped[list["Course"]] = relationship(
         "Course", back_populates="instrument"
+    )
+    bookings: Mapped[list["Booking"]] = relationship(
+        "Booking", back_populates="instrument"
     )

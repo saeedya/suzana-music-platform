@@ -31,6 +31,7 @@ Anyone, anywhere in the world.
 
 ## Project structure
 
+```text
 suzana-music-platform/
 ├── backend/          # FastAPI
 ├── frontend/         # Next.js (coming soon)
@@ -39,6 +40,7 @@ suzana-music-platform/
 ├── Caddyfile
 ├── ARCHITECTURE.md
 └── DESIGN.md
+```
 
 ## Documentation
 

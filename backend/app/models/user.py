@@ -1,15 +1,19 @@
 import uuid
 from datetime import datetime, timezone
+from typing import TYPE_CHECKING
 
 from sqlalchemy import Boolean, DateTime, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
+
+if TYPE_CHECKING:
+    from app.models.booking import Booking
 
 
 class User(Base):
     __tablename__ = "users"
-    
+
     id: Mapped[uuid.UUID] = mapped_column(
         primary_key=True, default=uuid.uuid4
     )
@@ -22,3 +26,6 @@ class User(Base):
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
     )
+
+    bookings: Mapped[list["Booking"]] = relationship(
+        "Booking", back_populates="student")
