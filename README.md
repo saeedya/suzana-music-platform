@@ -2,7 +2,7 @@
 
 Online music teaching platform for Suzana — a professional musician with 30+ years of experience teaching cello, piano, guitar, and music theory to students worldwide.
 
-![CI](https://github.com/saeedya/suzana-music-platform/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/saeedya/suzana-music-platform/actions/workflows/ci.yaml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-in--progress-yellow)
 
@@ -31,14 +31,13 @@ Anyone, anywhere in the world.
 
 ## Project structure
 
-suzana-music-platform/
-├── backend/          # FastAPI
-├── frontend/         # Next.js (coming soon)
-├── docker-compose.yml
-├── docker-compose.prod.yml
-├── Caddyfile
-├── ARCHITECTURE.md
-└── DESIGN.md
+- `backend/` — FastAPI
+- `frontend/` — Next.js (coming soon)
+- `docker-compose.yml`
+- `docker-compose.prod.yml`
+- `Caddyfile`
+- `ARCHITECTURE.md`
+- `DESIGN.md`
 
 ## Documentation
 

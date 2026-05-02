@@ -85,9 +85,9 @@ is_admin         boolean DEFAULT false
 created_at       timestamptz DEFAULT now()
 ```
 
-### courses (planned)
+### courses
 ```sql
-id              uuid PRIMARY KEY
+id              uuid PRIMARY KEY DEFAULT gen_random_uuid()
 instrument_id   uuid REFERENCES instruments(id)
 title           text NOT NULL
 slug            text UNIQUE NOT NULL
@@ -96,20 +96,24 @@ price_cents     integer NOT NULL
 level           text  -- 'beginner' | 'intermediate' | 'advanced' | 'all'
 lesson_count    integer
 is_published    boolean DEFAULT false
+is_active       boolean DEFAULT true
 stripe_price_id text
+created_at      timestamptz DEFAULT now()
 ```
 
-### bookings (planned)
+### bookings
 ```sql
-id                       uuid PRIMARY KEY
+id                       uuid PRIMARY KEY DEFAULT gen_random_uuid()
 student_id               uuid REFERENCES users(id)
 instrument_id            uuid REFERENCES instruments(id)
 starts_at                timestamptz NOT NULL
 ends_at                  timestamptz NOT NULL
 status                   text DEFAULT 'pending'
+price_cents              integer NOT NULL
 stripe_payment_intent_id text
 daily_room_url           text
-refund_deadline          timestamptz
+notes                    text
+created_at               timestamptz DEFAULT now()
 ```
 
 ### subscriptions (planned)
@@ -145,13 +149,16 @@ All endpoints prefixed with `/api/v1/`.
 | POST | `/api/v1/courses/` | Admin | Create course |
 | PATCH | `/api/v1/courses/{slug}` | Admin | Update course |
 | DELETE | `/api/v1/courses/{slug}` | Admin | Soft delete course |
+| POST | `/api/v1/bookings/` | Yes | Book a lesson |
+| GET | `/api/v1/bookings/my` | Yes | My bookings |
+| GET | `/api/v1/bookings/` | Admin | All bookings |
+| GET | `/api/v1/bookings/{id}` | Admin | Get booking |
+| PATCH | `/api/v1/bookings/{id}/cancel` | Yes | Cancel booking |
+
 
 ### Planned endpoints
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
-| GET | `/api/v1/courses/` | No | List courses |
-| GET | `/api/v1/courses/{slug}` | No | Course detail |
-| POST | `/api/v1/bookings/` | Yes | Book a lesson |
 | GET | `/api/v1/bookings/availability` | No | Available slots |
 | POST | `/api/v1/payments/create-intent` | Yes | Create payment |
 | POST | `/api/v1/payments/webhook` | No | Stripe webhook |
@@ -248,12 +255,12 @@ All endpoints prefixed with `/api/v1/`.
 
 ## 8. Testing Strategy
 
-### Unit tests (67 tests · 100% coverage)
+### Unit tests (133 tests · 100% coverage)
 - Mock all external dependencies (DB, Supabase, Stripe)
 - Fast — run in under 5 seconds
 - Run on every push
 
-### Integration tests (5 tests)
+### Integration tests (8 tests)
 - Real PostgreSQL connection
 - Transaction rollback after each test — no data pollution
 - Run on every push (PostgreSQL service in GitHub Actions)

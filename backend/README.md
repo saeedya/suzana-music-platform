@@ -66,20 +66,25 @@ mypy app/        # type check
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/v1/health` | Health check |
-| GET | `/api/v1/instruments/` | List all instruments |
-| GET | `/api/v1/instruments/{slug}` | Get instrument by slug |
-| POST | `/api/v1/auth/signup` | Sign up |
-| POST | `/api/v1/auth/signin` | Sign in |
-| POST | `/api/v1/auth/signout` | Sign out |
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/api/v1/health` | No | Health check |
+| GET | `/api/v1/instruments/` | No | List instruments |
+| GET | `/api/v1/instruments/{slug}` | No | Get by slug |
+| POST | `/api/v1/auth/signup` | No | Sign up |
+| POST | `/api/v1/auth/signin` | No | Sign in |
+| POST | `/api/v1/auth/signout` | Yes | Sign out |
 | GET | `/api/v1/courses/` | No | List published courses |
 | GET | `/api/v1/courses/{slug}` | No | Course detail |
 | GET | `/api/v1/courses/instrument/{id}` | No | Courses by instrument |
 | POST | `/api/v1/courses/` | Admin | Create course |
 | PATCH | `/api/v1/courses/{slug}` | Admin | Update course |
 | DELETE | `/api/v1/courses/{slug}` | Admin | Soft delete course |
+| POST | `/api/v1/bookings/` | Yes | Book a lesson |
+| GET | `/api/v1/bookings/my` | Yes | My bookings |
+| GET | `/api/v1/bookings/` | Admin | All bookings |
+| GET | `/api/v1/bookings/{id}` | Admin | Get booking |
+| PATCH | `/api/v1/bookings/{id}/cancel` | Yes | Cancel booking |
 
 > Swagger UI available at `/docs` in development only.
 
@@ -102,6 +107,7 @@ mypy app/        # type check
 | `Instrument` | `InstrumentCreate`, `InstrumentResponse` | Cello · Piano · Guitar · Music Theory |
 | `User` | `UserCreate`, `UserResponse` | Students and admin (Suzana) |
 | `Course` | `CourseCreate`, `CourseResponse`, `CourseUpdate` | Recorded courses per instrument |
+| `Booking` | `BookingCreate`, `BookingResponse`, `BookingStatusUpdate` | Private lesson bookings |
 
 ## Services
 
@@ -110,6 +116,7 @@ mypy app/        # type check
 | `instrument_service` | get all, get by slug, create |
 | `auth_service` | sign up, sign in, sign out, get user (Supabase) |
 | `course_service` | get all, get by instrument, get by slug, create, update, soft delete |
+| `booking_service` | create, get by student, get all, get by id, cancel |
 
 ## Database Migrations
 
