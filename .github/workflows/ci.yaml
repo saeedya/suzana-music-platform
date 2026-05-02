@@ -81,6 +81,8 @@ jobs:
           STRIPE_SECRET_KEY: sk_test_placeholder
           STRIPE_PUBLISHABLE_KEY: pk_test_placeholder
           STRIPE_WEBHOOK_SECRET: whsec_placeholder
+          DAILY_API_KEY: d_placeholder
+          DAILY_API_URL: https://api.daily.co/v1
         run: pytest tests/unit/ --cov=app --cov-report=term-missing
   
   security:
@@ -147,7 +149,9 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU
           STRIPE_SECRET_KEY: sk_test_placeholder
           STRIPE_PUBLISHABLE_KEY: pk_test_placeholder
-          STRIPE_WEBHOOK_SECRET: whsec_placeholder        
+          STRIPE_WEBHOOK_SECRET: whsec_placeholder
+          DAILY_API_KEY: d_placeholder
+          DAILY_API_URL: https://api.daily.co/v1       
         run: alembic upgrade head
 
       - name: Run integration tests
