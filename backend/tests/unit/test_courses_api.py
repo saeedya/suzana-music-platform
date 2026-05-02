@@ -70,14 +70,14 @@ def test_list_courses_by_instrument():
         assert response.status_code == 200
         assert len(response.json()) == 1
 
-def test_create_course_without_auth_returns_403():
+def test_create_course_without_auth_returns_401():
     response = client.post("/api/v1/courses/", json={
         "instrument_id": str(uuid.uuid4()),
         "title": "New Course",
         "slug": "new-course",
         "price_cents": 4900,
     })
-    assert response.status_code == 403
+    assert response.status_code == 401
 
 
 def test_update_course_not_found():
