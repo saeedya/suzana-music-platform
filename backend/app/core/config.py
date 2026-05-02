@@ -25,5 +25,9 @@ class Settings(BaseSettings):
     stripe_publishable_key: str
     stripe_webhook_secret: str
 
+    # Daily.co
+    daily_api_key: str
+    daily_api_url: str = "https://api.daily.co/v1"
+
 
 settings = Settings()
