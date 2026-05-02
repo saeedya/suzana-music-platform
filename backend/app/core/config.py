@@ -20,5 +20,10 @@ class Settings(BaseSettings):
     supabase_anon_key: str
     supabase_service_role_key: str
 
+    # Stripe
+    stripe_secret_key: str
+    stripe_publishable_key: str
+    stripe_webhook_secret: str
+
 
 settings = Settings()
