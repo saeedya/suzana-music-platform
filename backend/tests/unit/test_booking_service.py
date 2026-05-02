@@ -91,11 +91,15 @@ def test_get_booking_by_id_not_found():
 def test_cancel_booking_success():
     db = MagicMock()
     mock_booking = make_mock_booking(status="confirmed")
+    mock_booking.starts_at = MagicMock()
+    mock_booking.starts_at.strftime.return_value = "Monday, May 01 2026 at 10:00 UTC"
     db.query.return_value.filter.return_value.first.return_value = mock_booking
-    result = cancel_booking(db, str(uuid.uuid4()), str(uuid.uuid4()))
-    assert result is not None
-    assert mock_booking.status == "cancelled"
-    db.commit.assert_called_once()
+    with patch("app.services.booking_service.send_booking_cancelled_student") as mock_email:
+        result = cancel_booking(db, str(uuid.uuid4()), str(uuid.uuid4()))
+        assert result is not None
+        assert mock_booking.status == "cancelled"
+        db.commit.assert_called_once()
+        mock_email.assert_called_once()
 
 
 def test_cancel_booking_not_found():

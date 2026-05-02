@@ -70,3 +70,25 @@ def send_booking_confirmation_suzana(
         </p>
         """,
     })
+
+def send_booking_cancelled_student(
+    student_email: str,
+    student_name: str,
+    instrument: str,
+    starts_at: str,
+) -> None:
+    resend.Emails.send({
+        "from": settings.resend_from_email,
+        "to": student_email,
+        "subject": "Your lesson has been cancelled",
+        "html": f"""
+        <h2>Lesson cancelled</h2>
+        <p>Hi {student_name},</p>
+        <p>Your <strong>{instrument}</strong> lesson scheduled for 
+        <strong>{starts_at}</strong> has been cancelled.</p>
+        <p>If you paid for this lesson, a refund will be processed 
+        within 5-10 business days.</p>
+        <p>If you have any questions, please reply to this email.</p>
+        <p>Suzana</p>
+        """,
+    })
