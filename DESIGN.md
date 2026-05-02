@@ -139,6 +139,12 @@ All endpoints prefixed with `/api/v1/`.
 | POST | `/api/v1/auth/signup` | No | Sign up |
 | POST | `/api/v1/auth/signin` | No | Sign in |
 | POST | `/api/v1/auth/signout` | Yes | Sign out |
+| GET | `/api/v1/courses/` | No | List published courses |
+| GET | `/api/v1/courses/{slug}` | No | Course detail |
+| GET | `/api/v1/courses/instrument/{id}` | No | Courses by instrument |
+| POST | `/api/v1/courses/` | Admin | Create course |
+| PATCH | `/api/v1/courses/{slug}` | Admin | Update course |
+| DELETE | `/api/v1/courses/{slug}` | Admin | Soft delete course |
 
 ### Planned endpoints
 | Method | Endpoint | Auth | Description |
