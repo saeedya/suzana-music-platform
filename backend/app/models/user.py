@@ -9,7 +9,7 @@ from app.core.database import Base
 
 class User(Base):
     __tablename__ = "users"
-
+    
     id: Mapped[uuid.UUID] = mapped_column(
         primary_key=True, default=uuid.uuid4
     )

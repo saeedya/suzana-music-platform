@@ -20,4 +20,5 @@ class Instrument(Base):
     slug: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
 
     courses: Mapped[list["Course"]] = relationship(
-        "Course", back_populates="instrument")
+        "Course", back_populates="instrument"
+    )

@@ -35,3 +35,4 @@ class Course(Base):
 
     instrument: Mapped["Instrument"] = relationship(
         "Instrument", back_populates="courses")
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)

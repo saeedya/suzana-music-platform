@@ -38,6 +38,7 @@ def run_migrations_online() -> None:
         context.configure(
             connection=connection,
             target_metadata=target_metadata,
+            compare_indexes=False,
         )
         with context.begin_transaction():
             context.run_migrations()
