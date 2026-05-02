@@ -7,6 +7,10 @@ from app.core.dependencies import get_current_user
 from app.models.booking import Booking
 from app.models.user import User
 from app.services.daily_service import create_room
+from app.services.email_service import (
+    send_booking_confirmation_student,
+    send_booking_confirmation_suzana,
+)
 from app.services.payment_service import (
     construct_webhook_event,
     create_payment_intent,
@@ -82,5 +86,28 @@ async def webhook(
             )
             booking.daily_room_url = room_url
             db.commit()
+
+            # Send confirmation emails
+            starts_at_str = booking.starts_at.strftime("%A, %B %d %Y at %H:%M UTC")
+            ends_at_str = booking.ends_at.strftime("%H:%M UTC")
+
+            send_booking_confirmation_student(
+                student_email=booking.student.email,
+                student_name=booking.student.full_name,
+                instrument=booking.instrument.name,
+                starts_at=starts_at_str,
+                ends_at=ends_at_str,
+                room_url=room_url,
+            )
+
+            send_booking_confirmation_suzana(
+                suzana_email="suzana@example.com",
+                student_name=booking.student.full_name,
+                student_email=booking.student.email,
+                instrument=booking.instrument.name,
+                starts_at=starts_at_str,
+                ends_at=ends_at_str,
+                room_url=room_url,
+            )
 
     return {"status": "ok"}
