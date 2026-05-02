@@ -130,7 +130,7 @@ alembic downgrade -1
 
 ```bash
 docker build -t backend .
-docker run -p 8000:8000 --env-file .env backend
+docker run -p 8000:8000 --env-file .env suzana-backend
 ```
 
 ## Seed data

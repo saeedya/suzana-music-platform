@@ -123,8 +123,9 @@ app/
 ├── core/
 │   ├── config.py      # Settings from .env (pydantic-settings)
 │   ├── database.py    # SQLAlchemy engine + session
-│   ├── logging.py     # Loguru — colorized dev, JSON prod
+│   ├── log.py         # Loguru — colorized dev, JSON prod
 │   ├── security.py    # JWT decode + bcrypt
+│   ├── seed.py        # Seed data
 │   └── supabase.py    # Supabase client
 ├── models/       # SQLAlchemy ORM models
 ├── schemas/      # Pydantic request/response schemas
@@ -206,9 +207,9 @@ app/
 - Much simpler config
 
 ```
-# Full Caddy config for this project:
-suzanamusic.com {
-    reverse_proxy fastapi:8000
+Full Caddy config for this project:
+{$DOMAIN} {
+    reverse_proxy backend:8000
 }
 ```
 
@@ -262,14 +263,8 @@ DigitalOcean Kubernetes (DOKS) — only if Phase 3 is not enough.
 ## CI/CD pipeline
 
 ```
-push to main
-    │
-    ├── lint (ruff + mypy)
-    ├── test (pytest --cov)
-    ├── docker build + push to GHCR
-    ├── alembic upgrade head
-    ├── SSH deploy → docker compose pull && up -d
-    └── health check → GET /api/v1/health
+push to dev/main → lint + test + integration tests
+git tag v1.0.0   → lint + test + docker build + push to GHCR
 ```
 
 ---
