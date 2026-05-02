@@ -9,6 +9,23 @@ on:
     branches: [main, dev]
 
 jobs:
+  secrets-scan:
+    name: Secrets scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install git-secrets
+        run: |
+          git clone https://github.com/awslabs/git-secrets.git
+          cd git-secrets && sudo make install
+
+      - name: Scan for secrets
+        run: |
+          git secrets --register-aws
+          git secrets --scan-history --full-history  
   lint:
     name: Lint & type check
     runs-on: ubuntu-latest
