@@ -149,14 +149,16 @@ All endpoints prefixed with `/api/v1/`.
 | POST | `/api/v1/courses/` | Admin | Create course |
 | PATCH | `/api/v1/courses/{slug}` | Admin | Update course |
 | DELETE | `/api/v1/courses/{slug}` | Admin | Soft delete course |
+| POST | `/api/v1/bookings/` | Yes | Book a lesson |
+| GET | `/api/v1/bookings/my` | Yes | My bookings |
+| GET | `/api/v1/bookings/` | Admin | All bookings |
+| GET | `/api/v1/bookings/{id}` | Admin | Get booking |
+| PATCH | `/api/v1/bookings/{id}/cancel` | Yes | Cancel booking |
+
 
 ### Planned endpoints
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
-| POST | `/api/v1/bookings/` | Yes | Book a lesson |
-| GET | `/api/v1/bookings/my` | Yes | My bookings |
-| GET | `/api/v1/bookings/` | Admin | All bookings |
-| PATCH | `/api/v1/bookings/{id}/cancel` | Yes | Cancel booking |
 | GET | `/api/v1/bookings/availability` | No | Available slots |
 | POST | `/api/v1/payments/create-intent` | Yes | Create payment |
 | POST | `/api/v1/payments/webhook` | No | Stripe webhook |
@@ -253,7 +255,7 @@ All endpoints prefixed with `/api/v1/`.
 
 ## 8. Testing Strategy
 
-### Unit tests (115 tests · 100% coverage)
+### Unit tests (133 tests · 100% coverage)
 - Mock all external dependencies (DB, Supabase, Stripe)
 - Fast — run in under 5 seconds
 - Run on every push
