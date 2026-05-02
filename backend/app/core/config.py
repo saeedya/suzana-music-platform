@@ -29,5 +29,9 @@ class Settings(BaseSettings):
     daily_api_key: str
     daily_api_url: str = "https://api.daily.co/v1"
 
+    # Resend
+    resend_api_key: str
+    resend_from_email: str = "onboarding@resend.dev"
+
 
 settings = Settings()

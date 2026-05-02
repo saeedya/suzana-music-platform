@@ -121,6 +121,7 @@ mypy app/        # type check
 | `booking_service` | create, get by student, get all, get by id, cancel |
 | `payment_service` | create PaymentIntent, refund, webhook verification |
 | `daily_service` | create room, delete room (Daily.co) |
+| `email_service` | send booking confirmation to student and Suzana |
 
 ## Database Migrations
 

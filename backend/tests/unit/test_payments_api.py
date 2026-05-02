@@ -95,14 +95,20 @@ def test_webhook_payment_succeeded():
     mock_db = MagicMock()
     mock_booking = MagicMock()
     mock_booking.status = "pending"
+    mock_booking.starts_at = MagicMock()
+    mock_booking.starts_at.timestamp.return_value = 1234567890.0
+    mock_booking.starts_at.strftime.return_value = "Monday, May 01 2026 at 10:00 UTC"
     mock_booking.ends_at = MagicMock()
-    mock_booking.ends_at.timestamp.return_value = 1234567890.0
+    mock_booking.ends_at.timestamp.return_value = 1234571490.0
+    mock_booking.ends_at.strftime.return_value = "11:00 UTC"
     mock_db.query.return_value.filter.return_value.first.return_value = mock_booking
 
     app.dependency_overrides[get_db] = lambda: mock_db
 
     with patch("app.api.payments.construct_webhook_event") as mock_event, \
-         patch("app.api.payments.create_room") as mock_room:
+         patch("app.api.payments.create_room") as mock_room, \
+         patch("app.api.payments.send_booking_confirmation_student") as mock_email_student, \
+         patch("app.api.payments.send_booking_confirmation_suzana") as mock_email_suzana:
         mock_event.return_value = MagicMock(
             type="payment_intent.succeeded",
             data=MagicMock(object=MagicMock(id="pi_123"))
@@ -117,4 +123,5 @@ def test_webhook_payment_succeeded():
     app.dependency_overrides.clear()
     assert response.status_code == 200
     assert mock_booking.status == "confirmed"
-    assert mock_booking.daily_room_url == "https://suzana-music.daily.co/booking-123"
+    assert mock_email_student.called
+    assert mock_email_suzana.called
