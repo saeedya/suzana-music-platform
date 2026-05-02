@@ -18,7 +18,12 @@ def make_user(db) -> User:
 
 
 def make_instrument(db) -> Instrument:
-    instrument = db.query(Instrument).first()
+    instrument = Instrument(
+        name=f"Test-{uuid.uuid4()}",
+        slug=f"test-{uuid.uuid4()}",
+    )
+    db.add(instrument)
+    db.flush()
     return instrument
 
 
