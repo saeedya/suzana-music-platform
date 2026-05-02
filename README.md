@@ -31,16 +31,13 @@ Anyone, anywhere in the world.
 
 ## Project structure
 
-```text
-suzana-music-platform/
-├── backend/          # FastAPI
-├── frontend/         # Next.js (coming soon)
-├── docker-compose.yml
-├── docker-compose.prod.yml
-├── Caddyfile
-├── ARCHITECTURE.md
-└── DESIGN.md
-```
+- `backend/` — FastAPI
+- `frontend/` — Next.js (coming soon)
+- `docker-compose.yml`
+- `docker-compose.prod.yml`
+- `Caddyfile`
+- `ARCHITECTURE.md`
+- `DESIGN.md`
 
 ## Documentation
 
