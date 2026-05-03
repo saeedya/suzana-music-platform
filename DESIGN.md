@@ -35,14 +35,34 @@ Suzana is a professional musician with 30+ years of experience. This platform al
 | supabase | 2.4 | Auth + DB client |
 | resend | 2.29 | Transactional Email |
 
-### Frontend (coming soon)
+### Frontend
 | Tool | Version | Purpose |
 |------|---------|---------|
-| Next.js | 14 | Framework |
+| Next.js | 14.2 | Framework |
+| React | 18 | UI library |
 | TypeScript | 5 | Type safety |
 | Tailwind CSS | 3 | Styling |
-| React Query | 5 | Server state |
-| Zod | 3 | Validation |
+| axios | 1.x | HTTP client |
+| @tanstack/react-query | 5 | Server state |
+| zod | 3 | Validation |
+| react-hook-form | 7 | Form handling |
+| lucide-react | 0.x | Icons |
+| Stripe.js | 3 | Payment UI |
+
+### Current pages
+| Page | Path | Type | Description |
+|------|------|------|-------------|
+| Landing | `/` | Server | Hero + features |
+| Courses | `/courses` | Server | List all courses |
+| Sign in | `/auth/signin` | Client | Login form |
+| Sign up | `/auth/signup` | Client | Register form |
+
+### Planned pages
+| Page | Path | Description |
+|------|------|-------------|
+| Course detail | `/courses/[slug]` | Course info + booking |
+| Dashboard | `/dashboard` | My bookings |
+| Booking | `/booking` | Book a lesson |
 
 ### Infrastructure
 | Tool | Purpose |
