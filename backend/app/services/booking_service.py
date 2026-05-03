@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 
 from app.models.booking import Booking
 from app.schemas.booking import BookingCreate, BookingResponse
+from app.services.email_service import send_booking_cancelled_student
 
 
 def create_booking(
@@ -49,6 +50,14 @@ def cancel_booking(
     booking.status = "cancelled"
     db.commit()
     db.refresh(booking)
+
+    send_booking_cancelled_student(
+        student_email=booking.student.email,
+        student_name=booking.student.full_name,
+        instrument=booking.instrument.name,
+        starts_at=booking.starts_at.strftime("%A, %B %d %Y at %H:%M UTC"),
+    )
+
     return BookingResponse.model_validate(booking)
 
 
