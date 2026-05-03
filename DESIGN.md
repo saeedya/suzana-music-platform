@@ -226,6 +226,7 @@ All endpoints prefixed with `/api/v1/`.
 - Stripe webhook signature verified with `stripe.construct_event()`
 - `anon` role revoked from all tables (Supabase-specific)
 - Migrations conditional on role existence — works on both Supabase and plain PostgreSQL
+- Rate limiting on auth endpoints via `slowapi` — signup: 5/min, signin: 10/min per IP
 
 ---
 
@@ -256,7 +257,7 @@ All endpoints prefixed with `/api/v1/`.
 
 ## 8. Testing Strategy
 
-### Unit tests (152 tests · 100% coverage)
+### Unit tests (154 tests · 100% coverage)
 - Mock all external dependencies (DB, Supabase, Stripe)
 - Fast — run in under 5 seconds
 - Run on every push
