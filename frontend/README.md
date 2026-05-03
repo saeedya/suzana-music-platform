@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Frontend — Music Lesson Platform
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-14.2-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8)
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Next.js 14.2 (App Router)
+- React 18
+- TypeScript 5
+- Tailwind CSS 3
+- axios — HTTP client
+- @tanstack/react-query — server state
+- zod — validation
+- react-hook-form — form handling
+- lucide-react — icons
+- Stripe.js — payment UI
+
+## Structure
+
+```
+src/
+├── app/                  # Pages (Next.js App Router)
+│   ├── page.tsx          # Landing page
+│   ├── layout.tsx        # Root layout
+│   ├── globals.css       # Global styles
+│   ├── auth/
+│   │   ├── signin/       # Sign in page
+│   │   └── signup/       # Sign up page
+│   └── courses/          # Courses list page
+├── components/
+│   └── layout/
+│       └── Navbar.tsx    # Navigation bar
+├── context/
+│   └── AuthContext.tsx   # Auth state management
+├── lib/
+│   ├── api.ts            # axios client
+│   └── auth.ts           # Auth functions
+└── types/
+└── index.ts          # TypeScript interfaces
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd frontend
+npm install
+cp .env.local.example .env.local
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Environment variables
 
-## Learn More
+NEXT_PUBLIC_API_URL=http://localhost:8000
 
-To learn more about Next.js, take a look at the following resources:
+In production:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+NEXT_PUBLIC_API_URL=https://your-backend-url.railway.app
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Pages
 
-## Deploy on Vercel
+| Page | Path | Type | Description |
+|------|------|------|-------------|
+| Landing | `/` | Server | Hero + features |
+| Courses | `/courses` | Server | List all courses |
+| Sign in | `/auth/signin` | Client | Login form |
+| Sign up | `/auth/signup` | Client | Register form |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Planned pages
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| Page | Path | Description |
+|------|------|-------------|
+| Course detail | `/courses/[slug]` | Course info + booking |
+| Dashboard | `/dashboard` | My bookings |
+| Booking | `/booking` | Book a lesson |
+
+## Running in development
+
+```bash
+# Start backend first
+cd ../backend
+source venv/bin/activate
+uvicorn app.main:app --reload
+
+# Then start frontend
+cd ../frontend
+npm run dev
+```
+
+- Frontend: http://localhost:3000
+- Backend: http://localhost:8000
+- API docs: http://localhost:8000/docs
