@@ -10,6 +10,7 @@
 |---------|-----------|---------|
 | Booking confirmed (after payment) | Student | Your lesson is confirmed! |
 | Booking confirmed (after payment) | Suzana | New lesson booked — {student_name} |
+| Booking cancelled | Student | Your lesson has been cancelled |
 
 ---
 
