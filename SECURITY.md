@@ -15,6 +15,6 @@ All dependencies are scanned for known CVEs on every push using `pip-audit`.
 ## Planned security improvements
 
 - [X] Migrate from `python-jose` to `PyJWT` ✅
-- [ ] Rate limiting on auth endpoints
+- [X] Rate limiting on auth endpoints ✅
 - [ ] Stripe webhook signature verification
 - [ ] Grafana alerts for suspicious activity
