@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Course } from "@/types";
 import Link from "next/link";
 
