@@ -1,0 +1,8 @@
+do_token             = "your-digitalocean-token"
+cloudflare_api_token = "your-cloudflare-token"
+cloudflare_zone_id   = "your-zone-id"
+domain               = "s10i.xyz"
+subdomain            = "music"
+region               = "nyc1"
+droplet_size         = "s-1vcpu-2gb"
+ssh_public_key_path  = "~/.ssh/id_ed25519_music_app.pub"
