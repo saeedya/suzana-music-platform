@@ -46,7 +46,7 @@ def create_intent(
 
     intent = create_payment_intent(
         amount_cents=booking.price_cents,
-        currency="usd",
+        currency=settings.payment_currency,
         metadata={"booking_id": str(booking.id)},
     )
 
