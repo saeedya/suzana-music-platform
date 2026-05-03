@@ -1,6 +1,7 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 
+from app.core.limiter import limiter
 from app.core.supabase import supabase
 from app.schemas.user import UserCreate
 from app.services.auth_service import sign_in, sign_out, sign_up
@@ -18,7 +19,8 @@ class SignOutRequest(BaseModel):
 
 
 @router.post("/signup")
-def signup(data: UserCreate) -> dict[str, object]:
+@limiter.limit("5/minute")
+def signup(request: Request, data: UserCreate) -> dict[str, object]:
     try:
         return sign_up(supabase, data)
     except Exception as e:
@@ -26,7 +28,8 @@ def signup(data: UserCreate) -> dict[str, object]:
 
 
 @router.post("/signin")
-def signin(data: SignInRequest) -> dict[str, object]:
+@limiter.limit("10/minute")
+def signin(request: Request, data: SignInRequest) -> dict[str, object]:
     try:
         return sign_in(supabase, data.email, data.password)
     except Exception as e:
