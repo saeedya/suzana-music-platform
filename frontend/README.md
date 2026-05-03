@@ -91,3 +91,26 @@ npm run dev
 - Frontend: http://localhost:3000
 - Backend: http://localhost:8000
 - API docs: http://localhost:8000/docs
+
+## Docker
+
+### Build
+
+```bash
+docker build -t music-platform-frontend .
+```
+
+### Run
+
+```bash
+# Development (with local backend)
+docker run -p 3000:3000 \
+  -e NEXT_PUBLIC_API_URL=http://$(hostname -I | awk '{print $1}'):8000 \
+  music-platform-frontend
+```
+
+### Notes
+
+- Backend must run with `--host 0.0.0.0` for Docker to reach it
+- On Linux, use machine IP instead of `localhost` or `host.docker.internal`
+- Image size: ~156MB (Alpine-based)
