@@ -36,5 +36,8 @@ class Settings(BaseSettings):
     # Email
     teacher_email: str
 
+    # Currency
+    payment_currency: str = "usd"
+
 
 settings = Settings()
