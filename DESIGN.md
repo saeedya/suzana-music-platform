@@ -1,6 +1,6 @@
 # Design Document — Suzana Music Platform
 
-> Version: 1.4.0
+> Version: 1.4.1
 > Last updated: 2026-05-04
 > Status: In progress
 
@@ -75,6 +75,7 @@ Suzana is a professional musician with 30+ years of experience. This platform al
 | GitHub Actions | CI/CD ✅ |
 | Grafana + Prometheus | Monitoring (planned) |
 | Terraform | IaC (planned) ✅ |
+| Railway | Staging deployment ✅ |
 
 ### Third-party
 | Service | Purpose |
