@@ -281,6 +281,30 @@ git tag v1.x.x   → all above + docker build + push backend + frontend to GHCR
 
 ---
 
+## Deployment
+
+### Current — Staging (Railway)
+
+| Service | URL |
+|---------|-----|
+| Frontend | https://terrific-fulfillment-production-814a.up.railway.app |
+| Backend | https://suzana-music-platform-production.up.railway.app |
+| Database | Supabase Cloud (West EU — Ireland) |
+
+> Railway staging is used for development and testing only.
+> Production will be deployed to DigitalOcean with Terraform.
+
+### Planned — Production (DigitalOcean)
+| Component | Tool |
+|-----------|------|
+| Server | DigitalOcean Droplet NYC1 |
+| IaC | Terraform ✅ Ready |
+| Reverse proxy | Caddy |
+| CDN + DNS + WAF | Cloudflare |
+| Database | Supabase Cloud |
+
+---
+
 ## Data flow examples
 
 ### Student books a private lesson

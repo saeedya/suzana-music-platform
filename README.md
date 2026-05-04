@@ -49,7 +49,12 @@ Anyone, anywhere in the world.
 
 ## Live demo
 
+> These URLs are for development and testing only.
+> Production will be deployed to DigitalOcean.
+
+- Frontend: https://terrific-fulfillment-production-814a.up.railway.app
 - Backend API: https://suzana-music-platform-production.up.railway.app
+- Health check: https://suzana-music-platform-production.up.railway.app/api/v1/health
 
 ## Local development
 
