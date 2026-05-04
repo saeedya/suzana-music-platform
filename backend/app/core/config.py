@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     # App
     app_env: str = "development"
     secret_key: str
+    allowed_origins: str = "http://localhost:3000"
 
     # Database
     database_url: str
