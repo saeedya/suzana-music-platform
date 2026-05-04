@@ -1,13 +1,36 @@
+import uuid
+from datetime import datetime, timezone
+
+from sqlalchemy.orm import Session as DBSession
 from supabase import Client
 
+from app.core.security import hash_password
+from app.models.user import User
 from app.schemas.user import UserCreate
 
 
-def sign_up(client: Client, data: UserCreate) -> dict[str, object]:
+def sign_up(client: Client, data: UserCreate, db: DBSession | None = None) \
+      -> dict[str, object]:
     response = client.auth.sign_up({
         "email": data.email,
         "password": data.password,
     })
+
+    if db and response.user:
+        existing = db.query(User).filter(User.email == data.email).first()
+        if not existing:
+            user = User(
+                id=uuid.uuid4(),
+                email=data.email,
+                hashed_password=hash_password(data.password),
+                full_name=data.full_name,
+                is_active=True,
+                is_admin=False,
+                created_at=datetime.now(timezone.utc),
+            )
+            db.add(user)
+            db.commit()
+
     return {"user": response.user, "session": response.session}
 
 
