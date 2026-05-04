@@ -1,6 +1,8 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
 
+from app.core.database import get_db
 from app.core.limiter import limiter
 from app.core.supabase import supabase
 from app.schemas.user import UserCreate
@@ -20,9 +22,13 @@ class SignOutRequest(BaseModel):
 
 @router.post("/signup")
 @limiter.limit("5/minute")
-def signup(request: Request, data: UserCreate) -> dict[str, object]:
+def signup(
+    request: Request,
+    data: UserCreate,
+    db: Session = Depends(get_db),
+) -> dict[str, object]:
     try:
-        return sign_up(supabase, data)
+        return sign_up(supabase, data, db)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
 
