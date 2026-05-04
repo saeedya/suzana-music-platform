@@ -32,36 +32,59 @@ Anyone, anywhere in the world.
 ## Project structure
 
 - `backend/` — FastAPI
-- `frontend/` — Next.js (coming soon)
+- `frontend/` — Next.js
+- `infra/terraform` - Terraform IaC
 - `docker-compose.yml`
 - `docker-compose.prod.yml`
 - `Caddyfile`
 - `ARCHITECTURE.md`
 - `DESIGN.md`
+- `SECURITY.md`
 
 ## Documentation
 
 - [Architecture](./ARCHITECTURE.md) — system design and infrastructure
 - [Design document](./DESIGN.md) — technical decisions
+- [Security](./SECURITY.md) — security policy and known issues
+
+## Live demo
+
+- Backend API: https://suzana-music-platform-production.up.railway.app
 
 ## Local development
 
-### With Docker
+### With Docker Compose (recommended)
 
 ```bash
 docker compose up --build
 ```
 
+- Frontend: http://localhost:3000
 - Backend: http://localhost:8000
 - API docs: http://localhost:8000/docs
 
 ### Without Docker
 
 ```bash
+# 1. Start Supabase
 supabase start
+
+# 2. Start backend
 cd backend
 source venv/bin/activate
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+# 3. Start frontend
+cd frontend
+npm run dev
+```
+
+## Create admin user
+
+```bash
+cd backend
+source venv/bin/activate
+PYTHONPATH=. venv/bin/python app/core/create_admin.py
 ```
 
 ## Production deployment

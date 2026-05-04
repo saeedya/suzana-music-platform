@@ -263,9 +263,21 @@ DigitalOcean Kubernetes (DOKS) — only if Phase 3 is not enough.
 ## CI/CD pipeline
 
 ```
-push to dev/main → lint + test + integration tests
-git tag v1.0.0   → lint + test + docker build + push to GHCR
+push to dev/main → secrets-scan → lint → test → security → integration tests → frontend checks
+git tag v1.x.x   → all above + docker build + push backend + frontend to GHCR
 ```
+
+### Jobs
+
+| Job | Description |
+|-----|-------------|
+| secrets-scan | git-secrets scan for AWS keys and secrets |
+| lint | ruff + mypy for backend |
+| test | pytest unit tests (154 tests · 94% coverage) |
+| security | pip-audit for Python deps · npm audit for frontend |
+| test-integration | pytest integration tests with real PostgreSQL |
+| frontend | TypeScript check · ESLint · npm audit |
+| build-and-push | Docker build + push to GHCR (tags only) |
 
 ---
 
@@ -303,12 +315,21 @@ supabase start
 # 2. Start FastAPI
 cd backend
 source venv/bin/activate
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
-# 3. Start Next.js (coming soon)
+# 3. Start Next.js
 cd frontend
 npm run dev
 ```
+
+### With Docker Compose (recommended)
+```bash
+docker compose up
+```
+
+- Frontend: http://localhost:3000
+- Backend: http://localhost:8000
+- API docs: http://localhost:8000/docs (development only)
 
 ---
 
