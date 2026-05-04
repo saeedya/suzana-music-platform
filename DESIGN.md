@@ -1,7 +1,7 @@
 # Design Document — Suzana Music Platform
 
-> Version: 1.1.0
-> Last updated: 2026-05-02
+> Version: 1.4.0
+> Last updated: 2026-05-04
 > Status: In progress
 
 ---
@@ -53,28 +53,28 @@ Suzana is a professional musician with 30+ years of experience. This platform al
 | Page | Path | Type | Description |
 |------|------|------|-------------|
 | Landing | `/` | Server | Hero + features |
-| Courses | `/courses` | Server | List all courses |
-| Sign in | `/auth/signin` | Client | Login form |
-| Sign up | `/auth/signup` | Client | Register form |
+| Courses | `/courses` | Server | List all courses with instrument filter |
+| Course detail | `/courses/[slug]` | Server | Course info + booking button |
+| Sign in | `/auth/signin` | Client | Login form with show/hide password |
+| Sign up | `/auth/signup` | Client | Register form with password validation |
+| Dashboard | `/dashboard` | Client | My upcoming and past lessons |
 
 ### Planned pages
 | Page | Path | Description |
 |------|------|-------------|
-| Course detail | `/courses/[slug]` | Course info + booking |
-| Dashboard | `/dashboard` | My bookings |
 | Booking | `/booking` | Book a lesson |
 
 ### Infrastructure
 | Tool | Purpose |
 |------|---------|
 | DigitalOcean NYC1 | Origin server |
-| Docker + Compose | Containerization |
+| Docker + Compose | Containerization ✅ | 
 | Caddy | Reverse proxy + auto HTTPS |
 | Cloudflare | CDN · WAF · DNS · R2 |
-| Supabase (self-hosted) | PostgreSQL + Auth |
-| GitHub Actions | CI/CD |
+| Supabase (self-hosted) | PostgreSQL + Auth ✅ |
+| GitHub Actions | CI/CD ✅ |
 | Grafana + Prometheus | Monitoring (planned) |
-| Terraform | IaC (planned) |
+| Terraform | IaC (planned) ✅ |
 
 ### Third-party
 | Service | Purpose |
@@ -248,6 +248,13 @@ All endpoints prefixed with `/api/v1/`.
 - Migrations conditional on role existence — works on both Supabase and plain PostgreSQL
 - Rate limiting on auth endpoints via `slowapi` — signup: 5/min, signin: 10/min per IP
 
+### Password policy
+- Minimum 8 characters
+- At least one uppercase letter
+- At least one number
+- At least one special character (!@#$%^&*)
+- Validation on frontend before submission
+
 ---
 
 ## 7. Infrastructure Decisions
@@ -277,7 +284,7 @@ All endpoints prefixed with `/api/v1/`.
 
 ## 8. Testing Strategy
 
-### Unit tests (154 tests · 100% coverage)
+### Unit tests (154 tests · 94% coverage)
 - Mock all external dependencies (DB, Supabase, Stripe)
 - Fast — run in under 5 seconds
 - Run on every push
