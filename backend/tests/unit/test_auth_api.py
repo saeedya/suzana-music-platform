@@ -1,21 +1,37 @@
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 from fastapi.testclient import TestClient
 from app.main import app
+from app.core.dependencies import get_db
 
 client = TestClient(app)
 
 
 def test_signup_success():
-    with patch("app.api.auth.sign_up") as mock:
-        mock.return_value = {"user": {"email": "test@example.com"}, "session": {}}
+    mock_db = MagicMock()
+    mock_user = MagicMock()
+    mock_user.id = "123"
+    mock_user.email = "test@example.com"
+    mock_user.full_name = "Test User"
+    mock_user.is_admin = False
+    mock_db.query.return_value.filter.return_value.first.return_value = mock_user
+
+    app.dependency_overrides[get_db] = lambda: mock_db
+
+    with patch("app.api.auth.sign_up") as mock_signup:
+        mock_signup.return_value = {
+            "user": {"email": "test@example.com"},
+            "session": MagicMock(access_token="token"),
+        }
         response = client.post("/api/v1/auth/signup", json={
             "email": "test@example.com",
             "full_name": "Test User",
             "password": "password123",
         })
         assert response.status_code == 200
-        assert "user" in response.json()
+        assert "access_token" in response.json()
+        assert response.json()["user"]["email"] == "test@example.com"
 
+    app.dependency_overrides.clear()
 
 def test_signup_failure():
     with patch("app.api.auth.sign_up") as mock:
@@ -29,14 +45,30 @@ def test_signup_failure():
 
 
 def test_signin_success():
-    with patch("app.api.auth.sign_in") as mock:
-        mock.return_value = {"user": {"email": "test@example.com"}, "session": {"access_token": "token"}}
+    mock_db = MagicMock()
+    mock_user = MagicMock()
+    mock_user.id = "123"
+    mock_user.email = "test@example.com"
+    mock_user.full_name = "Test User"
+    mock_user.is_admin = False
+    mock_db.query.return_value.filter.return_value.first.return_value = mock_user
+
+    app.dependency_overrides[get_db] = lambda: mock_db
+
+    with patch("app.api.auth.sign_in") as mock_signin:
+        mock_signin.return_value = {
+            "user": {"email": "test@example.com"},
+            "session": MagicMock(access_token="token"),
+        }
         response = client.post("/api/v1/auth/signin", json={
             "email": "test@example.com",
             "password": "password123",
         })
         assert response.status_code == 200
-        assert "session" in response.json()
+        assert "access_token" in response.json()
+        assert response.json()["user"]["email"] == "test@example.com"
+
+    app.dependency_overrides.clear()
 
 
 def test_signin_failure():
