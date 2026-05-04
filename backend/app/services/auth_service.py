@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime, timezone
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session as DBSession
 from supabase import Client
 
 from app.core.security import hash_password
@@ -9,14 +9,13 @@ from app.models.user import User
 from app.schemas.user import UserCreate
 
 
-def sign_up(client: Client, data: UserCreate, db: Session | None = None) \
-     -> dict[str, object]:
+def sign_up(client: Client, data: UserCreate, db: DBSession | None = None) \
+      -> dict[str, object]:
     response = client.auth.sign_up({
         "email": data.email,
         "password": data.password,
     })
 
-    # Save user in our DB too
     if db and response.user:
         existing = db.query(User).filter(User.email == data.email).first()
         if not existing:

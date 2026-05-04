@@ -1,4 +1,4 @@
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 from fastapi.testclient import TestClient
 from app.main import app
 
@@ -30,13 +30,18 @@ def test_signup_failure():
 
 def test_signin_success():
     with patch("app.api.auth.sign_in") as mock:
-        mock.return_value = {"user": {"email": "test@example.com"}, "session": {"access_token": "token"}}
+        mock.return_value = {
+            "user": {"email": "test@example.com"},
+            "session": MagicMock(access_token="token"),
+        }
         response = client.post("/api/v1/auth/signin", json={
             "email": "test@example.com",
             "password": "password123",
         })
         assert response.status_code == 200
-        assert "session" in response.json()
+        assert "access_token" in response.json()
+        assert "user" in response.json()
+        assert response.json()["user"]["email"] == "test@example.com"
 
 
 def test_signin_failure():
