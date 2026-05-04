@@ -10,6 +10,19 @@ All npm dependencies are scanned using `npm audit --audit-level=critical`.
 
 ---
 
+## Password policy
+
+All user passwords must meet the following requirements:
+
+- Minimum 8 characters
+- At least one uppercase letter (A-Z)
+- At least one number (0-9)
+- At least one special character (!@#$%^&*)
+
+Validation is enforced on the frontend before submission.
+
+---
+
 ## Known issues
 
 ### Backend
@@ -44,6 +57,8 @@ All npm dependencies are scanned using `npm audit --audit-level=critical`.
 - [x] pip-audit in CI ✅
 - [x] npm audit in CI ✅
 - [x] git-secrets scan ✅
+- [x] Password policy enforcement ✅
+- [x] CORS middleware with ALLOWED_ORIGINS ✅
 - [ ] Stripe webhook signature verification
 - [ ] Grafana alerts for suspicious activity
 - [ ] HTTPS enforced in production (via Caddy)
