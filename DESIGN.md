@@ -1,6 +1,6 @@
 # Design Document — Suzana Music Platform
 
-> Version: 1.6.0
+> Version: 1.7.0
 > Last updated: 2026-05-07
 > Status: In progress
 
