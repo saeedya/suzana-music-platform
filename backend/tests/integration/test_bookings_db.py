@@ -85,3 +85,47 @@ def test_booking_cancel(db):
 
     cancelled = db.query(Booking).filter(Booking.id == booking.id).first()
     assert cancelled.status == "cancelled"
+
+def test_get_my_booking_by_id_returns_own_booking(db):
+    user = make_user(db)
+    instrument = make_instrument(db)
+    booking = Booking(
+        student_id=user.id,
+        instrument_id=instrument.id,
+        starts_at=datetime.now(timezone.utc),
+        ends_at=datetime.now(timezone.utc),
+        price_cents=5000,
+    )
+    db.add(booking)
+    db.flush()
+
+    result = db.query(Booking).filter(
+        Booking.id == booking.id,
+        Booking.student_id == user.id,
+    ).first()
+
+    assert result is not None
+    assert result.id == booking.id
+    assert result.student_id == user.id
+
+
+def test_get_my_booking_by_id_cannot_access_others(db):
+    owner = make_user(db)
+    other = make_user(db)
+    instrument = make_instrument(db)
+    booking = Booking(
+        student_id=owner.id,
+        instrument_id=instrument.id,
+        starts_at=datetime.now(timezone.utc),
+        ends_at=datetime.now(timezone.utc),
+        price_cents=5000,
+    )
+    db.add(booking)
+    db.flush()
+
+    result = db.query(Booking).filter(
+        Booking.id == booking.id,
+        Booking.student_id == other.id,
+    ).first()
+
+    assert result is None
