@@ -8,6 +8,7 @@ from app.services.booking_service import (
     create_booking,
     get_all_bookings,
     get_booking_by_id,
+    get_my_booking_by_id,
     get_student_bookings,
 )
 
@@ -114,4 +115,18 @@ def test_cancel_booking_already_cancelled():
     mock_booking = make_mock_booking(status="cancelled")
     db.query.return_value.filter.return_value.first.return_value = mock_booking
     result = cancel_booking(db, str(uuid.uuid4()), str(uuid.uuid4()))
+    assert result is None
+
+
+def test_get_my_booking_by_id_found():
+    db = MagicMock()
+    db.query.return_value.filter.return_value.first.return_value = make_mock_booking()
+    result = get_my_booking_by_id(db, str(uuid.uuid4()), str(uuid.uuid4()))
+    assert result is not None
+
+
+def test_get_my_booking_by_id_not_found():
+    db = MagicMock()
+    db.query.return_value.filter.return_value.first.return_value = None
+    result = get_my_booking_by_id(db, str(uuid.uuid4()), str(uuid.uuid4()))
     assert result is None
