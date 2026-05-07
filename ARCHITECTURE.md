@@ -309,12 +309,16 @@ git tag v1.x.x   → all above + docker build + push backend + frontend to GHCR
 
 ### Student books a private lesson
 ```
-1. Student selects slot + instrument on Next.js
-2. POST /api/v1/bookings → FastAPI
-3. FastAPI: verify JWT → check availability → create Stripe PaymentIntent
-4. Student pays via Stripe Payment Element
-5. Stripe fires payment_intent.succeeded webhook
-6. FastAPI webhook handler:
+1. Student selects instrument and session duration (30 or 60 min)
+2. GET /api/v1/availability/slots?target_date=...&session_duration=60
+   → list of available slots in UTC
+3. Frontend converts UTC to student's local timezone (browser Intl API)
+4. Student selects a slot
+5. POST /api/v1/bookings → FastAPI
+6. FastAPI: verify JWT → create Stripe PaymentIntent
+7. Student pays via Stripe Payment Element
+8. Stripe fires payment_intent.succeeded webhook
+9. FastAPI webhook handler:
    - marks booking as confirmed
    - creates Daily.co room
    - sends confirmation email via Resend

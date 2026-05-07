@@ -298,12 +298,12 @@ All endpoints prefixed with `/api/v1/`.
 
 ## 8. Testing Strategy
 
-### Unit tests (154 tests · 94% coverage)
+### Unit tests (165 tests · 95% coverage)
 - Mock all external dependencies (DB, Supabase, Stripe)
 - Fast — run in under 5 seconds
 - Run on every push
 
-### Integration tests (8 tests)
+### Integration tests (12 tests)
 - Real PostgreSQL connection
 - Transaction rollback after each test — no data pollution
 - Run on every push (PostgreSQL service in GitHub Actions)
