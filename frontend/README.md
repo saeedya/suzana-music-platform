@@ -74,6 +74,7 @@ NEXT_PUBLIC_API_URL=https://your-backend-url.railway.app
 | Course detail | `/courses/[slug]` | Course info + booking |
 | Dashboard | `/dashboard` | My bookings |
 | Booking | `/booking` | Book a lesson |
+| Booking | `/booking` | Client | 4-step booking wizard |
 
 ## Running in development
 
