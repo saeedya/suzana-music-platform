@@ -1,7 +1,7 @@
 # Design Document — Suzana Music Platform
 
-> Version: 1.4.1
-> Last updated: 2026-05-04
+> Version: 1.6.0
+> Last updated: 2026-05-07
 > Status: In progress
 
 ---
@@ -138,6 +138,17 @@ notes                    text
 created_at               timestamptz DEFAULT now()
 ```
 
+### availability
+```sql
+id               uuid PRIMARY KEY
+day_of_week      integer  -- 0=Monday, 6=Sunday
+start_time       time NOT NULL
+end_time         time NOT NULL
+session_duration integer NOT NULL  -- 30 or 60 minutes
+is_active        boolean DEFAULT true
+timezone         text DEFAULT 'America/New_York'
+```
+
 ### subscriptions (planned)
 ```sql
 id                     uuid PRIMARY KEY
@@ -178,12 +189,14 @@ All endpoints prefixed with `/api/v1/`.
 | PATCH | `/api/v1/bookings/{id}/cancel` | Yes | Cancel booking |
 | POST | `/api/v1/payments/create-intent` | Yes | Create payment intent |
 | POST | `/api/v1/payments/webhook` | No | Stripe webhook |
+| GET | `/api/v1/availability/` | No | List availability |
+| POST | `/api/v1/availability/` | Admin | Create availability |
+| GET | `/api/v1/availability/slots` | Yes | Available slots by date |
 
 
 ### Planned endpoints
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
-| GET | `/api/v1/bookings/availability` | No | Available slots |
 | POST | `/api/v1/subscriptions/` | Yes | Create subscription |
 | GET | `/api/v1/dashboard/bookings` | Yes | My bookings |
 | GET | `/api/v1/dashboard/courses` | Yes | My courses |
@@ -285,12 +298,12 @@ All endpoints prefixed with `/api/v1/`.
 
 ## 8. Testing Strategy
 
-### Unit tests (154 tests · 94% coverage)
+### Unit tests (165 tests · 95% coverage)
 - Mock all external dependencies (DB, Supabase, Stripe)
 - Fast — run in under 5 seconds
 - Run on every push
 
-### Integration tests (8 tests)
+### Integration tests (12 tests)
 - Real PostgreSQL connection
 - Transaction rollback after each test — no data pollution
 - Run on every push (PostgreSQL service in GitHub Actions)
