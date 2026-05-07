@@ -58,6 +58,7 @@ Suzana is a professional musician with 30+ years of experience. This platform al
 | Sign in | `/auth/signin` | Client | Login form with show/hide password |
 | Sign up | `/auth/signup` | Client | Register form with password validation |
 | Dashboard | `/dashboard` | Client | My upcoming and past lessons |
+| Booking | `/booking` | Client | 4-step wizard: instrument → duration → slot → payment |
 
 ### Planned pages
 | Page | Path | Description |
