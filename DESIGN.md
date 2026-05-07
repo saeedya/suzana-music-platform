@@ -1,7 +1,7 @@
 # Design Document — Suzana Music Platform
 
 > Version: 1.7.0
-> Last updated: 2026-05-07
+> Last updated: 2026-05-08
 > Status: In progress
 
 ---
@@ -59,11 +59,6 @@ Suzana is a professional musician with 30+ years of experience. This platform al
 | Sign up | `/auth/signup` | Client | Register form with password validation |
 | Dashboard | `/dashboard` | Client | My upcoming and past lessons |
 | Booking | `/booking` | Client | 4-step wizard: instrument → duration → slot → payment |
-
-### Planned pages
-| Page | Path | Description |
-|------|------|-------------|
-| Booking | `/booking` | Book a lesson |
 
 ### Infrastructure
 | Tool | Purpose |
@@ -185,6 +180,7 @@ All endpoints prefixed with `/api/v1/`.
 | DELETE | `/api/v1/courses/{slug}` | Admin | Soft delete course |
 | POST | `/api/v1/bookings/` | Yes | Book a lesson |
 | GET | `/api/v1/bookings/my` | Yes | My bookings |
+| GET | `/api/v1/bookings/my/{id}` | Yes | Get own booking by id |
 | GET | `/api/v1/bookings/` | Admin | All bookings |
 | GET | `/api/v1/bookings/{id}` | Admin | Get booking |
 | PATCH | `/api/v1/bookings/{id}/cancel` | Yes | Cancel booking |
@@ -199,8 +195,6 @@ All endpoints prefixed with `/api/v1/`.
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
 | POST | `/api/v1/subscriptions/` | Yes | Create subscription |
-| GET | `/api/v1/dashboard/bookings` | Yes | My bookings |
-| GET | `/api/v1/dashboard/courses` | Yes | My courses |
 
 ---
 
@@ -299,12 +293,12 @@ All endpoints prefixed with `/api/v1/`.
 
 ## 8. Testing Strategy
 
-### Unit tests (165 tests · 95% coverage)
+### Unit tests (169 tests · 95% coverage)
 - Mock all external dependencies (DB, Supabase, Stripe)
 - Fast — run in under 5 seconds
 - Run on every push
 
-### Integration tests (12 tests)
+### Integration tests (14 tests)
 - Real PostgreSQL connection
 - Transaction rollback after each test — no data pollution
 - Run on every push (PostgreSQL service in GitHub Actions)
