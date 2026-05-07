@@ -68,3 +68,14 @@ def get_booking_by_id(
     if not booking:
         return None
     return BookingResponse.model_validate(booking)
+
+def get_my_booking_by_id(
+    db: Session, booking_id: str, student_id: str
+) -> BookingResponse | None:
+    booking = db.query(Booking).filter(
+        Booking.id == booking_id,
+        Booking.student_id == student_id,
+    ).first()
+    if not booking:
+        return None
+    return BookingResponse.model_validate(booking)

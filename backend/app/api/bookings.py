@@ -10,6 +10,7 @@ from app.services.booking_service import (
     create_booking,
     get_all_bookings,
     get_booking_by_id,
+    get_my_booking_by_id,
     get_student_bookings,
 )
 
@@ -31,6 +32,18 @@ def my_bookings(
     current_user: User = Depends(get_current_user),
 ) -> list[BookingResponse]:
     return get_student_bookings(db, str(current_user.id))
+
+
+@router.get("/my/{booking_id}", response_model=BookingResponse)
+def get_my_booking(
+    booking_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> BookingResponse:
+    booking = get_my_booking_by_id(db, booking_id, str(current_user.id))
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    return booking
 
 
 @router.get("/", response_model=list[BookingResponse])

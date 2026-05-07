@@ -116,3 +116,22 @@ def test_cancel_booking_not_found():
         response = client.patch(f"/api/v1/bookings/{uuid.uuid4()}/cancel")
         assert response.status_code == 404
     app.dependency_overrides.clear()
+
+def test_get_my_booking_success():
+    mock_user = make_mock_user()
+    app.dependency_overrides[get_current_user] = lambda: mock_user
+    with patch("app.api.bookings.get_my_booking_by_id") as mock:
+        mock.return_value = make_booking_response()
+        response = client.get(f"/api/v1/bookings/my/{uuid.uuid4()}")
+        assert response.status_code == 200
+    app.dependency_overrides.clear()
+
+
+def test_get_my_booking_not_found():
+    mock_user = make_mock_user()
+    app.dependency_overrides[get_current_user] = lambda: mock_user
+    with patch("app.api.bookings.get_my_booking_by_id") as mock:
+        mock.return_value = None
+        response = client.get(f"/api/v1/bookings/my/{uuid.uuid4()}")
+        assert response.status_code == 404
+    app.dependency_overrides.clear()
