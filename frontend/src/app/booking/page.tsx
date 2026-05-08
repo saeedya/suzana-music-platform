@@ -1,18 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Instrument } from "@/types";
 import InstrumentStep from "@/components/booking/InstrumentStep";
 import DurationStep from "@/components/booking/DurationStep";
 import SlotStep from "@/components/booking/SlotStep";
+import { getCourseById } from "@/lib/courses";
+import { getInstruments } from "@/lib/instruments";
 
 const STEPS = ["Instrument", "Duration", "Date & Time", "Payment"];
 
 export default function BookingPage() {
   const { user, isLoading } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const courseId = searchParams.get("courseId");
+
   const [step, setStep] = useState(0);
   const [selectedInstrument, setSelectedInstrument] =
     useState<Instrument | null>(null);
@@ -23,10 +28,49 @@ export default function BookingPage() {
     starts_at: string;
     ends_at: string;
   } | null>(null);
+  const [isResolving, setIsResolving] = useState(!!courseId);
+
+  useEffect(() => {
+    if (!courseId) return;
+
+    async function resolveInstrumentFromCourse() {
+      try {
+        const course = await getCourseById(courseId!);
+        if (!course) {
+          setIsResolving(false);
+          return;
+        }
+
+        const instruments = await getInstruments();
+        const instrument = instruments.find(
+          (i) => i.id === course.instrument_id
+        );
+
+        if (instrument) {
+          setSelectedInstrument(instrument);
+          setStep(1);
+        }
+      } catch {
+        // Ignore errors, just don't pre-select anything
+      } finally {
+        setIsResolving(false);
+      }
+    }
+
+    resolveInstrumentFromCourse();
+  }, [courseId]);
 
   if (!isLoading && !user) {
     router.push("/auth/signin");
     return null;
+  }
+
+  if (isResolving) {
+    return (
+      <main className="max-w-2xl mx-auto px-6 py-12">
+        <p className="text-center text-gray-400">Loading...</p>
+      </main>
+    );
   }
 
   function nextStep() {
