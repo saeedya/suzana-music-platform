@@ -127,3 +127,17 @@ def test_delete_course_as_admin():
         assert response.status_code == 200
         assert response.json()["message"] == "Course deleted successfully"
     app.dependency_overrides.clear()
+
+def test_get_course_by_id_found():
+    with patch("app.api.courses.get_course_by_id") as mock:
+        mock.return_value = make_course_response()
+        response = client.get(f"/api/v1/courses/id/{uuid.uuid4()}")
+        assert response.status_code == 200
+        assert response.json()["slug"] == "cello-for-beginners"
+
+
+def test_get_course_by_id_not_found():
+    with patch("app.api.courses.get_course_by_id") as mock:
+        mock.return_value = None
+        response = client.get(f"/api/v1/courses/id/{uuid.uuid4()}")
+        assert response.status_code == 404
