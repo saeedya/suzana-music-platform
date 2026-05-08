@@ -1,12 +1,13 @@
 import uuid
 from unittest.mock import MagicMock, patch
 from app.services.course_service import (
-    get_all_courses,
-    get_courses_by_instrument,
-    get_course_by_slug,
     create_course,
-    update_course,
     delete_course,
+    get_all_courses,
+    get_course_by_id,
+    get_course_by_slug,
+    get_courses_by_instrument,
+    update_course,
 )
 from app.schemas.course import CourseCreate, CourseUpdate
 
@@ -125,3 +126,18 @@ def test_get_courses_by_instrument_empty():
     db.query.return_value.filter.return_value.filter.return_value.all.return_value = []
     result = get_courses_by_instrument(db, str(uuid.uuid4()))
     assert result == []
+
+def test_get_course_by_id_found():
+    db = MagicMock()
+    mock_course = make_mock_course()
+    db.query.return_value.filter.return_value.first.return_value = mock_course
+    result = get_course_by_id(db, str(uuid.uuid4()))
+    assert result is not None
+    assert result.slug == "cello-for-beginners"
+
+
+def test_get_course_by_id_not_found():
+    db = MagicMock()
+    db.query.return_value.filter.return_value.first.return_value = None
+    result = get_course_by_id(db, str(uuid.uuid4()))
+    assert result is None

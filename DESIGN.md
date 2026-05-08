@@ -58,7 +58,7 @@ Suzana is a professional musician with 30+ years of experience. This platform al
 | Sign in | `/auth/signin` | Client | Login form with show/hide password |
 | Sign up | `/auth/signup` | Client | Register form with password validation |
 | Dashboard | `/dashboard` | Client | My upcoming and past lessons |
-| Booking | `/booking` | Client | 4-step wizard: instrument → duration → slot → payment |
+| Booking | `/booking` | Client | 4-step wizard: instrument → duration → slot → payment · instrument step skipped if courseId in URL |
 
 ### Infrastructure
 | Tool | Purpose |
@@ -173,8 +173,9 @@ All endpoints prefixed with `/api/v1/`.
 | POST | `/api/v1/auth/signin` | No | Sign in |
 | POST | `/api/v1/auth/signout` | Yes | Sign out |
 | GET | `/api/v1/courses/` | No | List published courses |
-| GET | `/api/v1/courses/{slug}` | No | Course detail |
+| GET | `/api/v1/courses/id/{id}` | No | Get course by id |
 | GET | `/api/v1/courses/instrument/{id}` | No | Courses by instrument |
+| GET | `/api/v1/courses/{slug}` | No | Course detail |
 | POST | `/api/v1/courses/` | Admin | Create course |
 | PATCH | `/api/v1/courses/{slug}` | Admin | Update course |
 | DELETE | `/api/v1/courses/{slug}` | Admin | Soft delete course |
@@ -293,12 +294,12 @@ All endpoints prefixed with `/api/v1/`.
 
 ## 8. Testing Strategy
 
-### Unit tests (169 tests · 95% coverage)
+### Unit tests (173 tests · 95% coverage)
 - Mock all external dependencies (DB, Supabase, Stripe)
 - Fast — run in under 5 seconds
 - Run on every push
 
-### Integration tests (14 tests)
+### Integration tests (17 tests)
 - Real PostgreSQL connection
 - Transaction rollback after each test — no data pollution
 - Run on every push (PostgreSQL service in GitHub Actions)

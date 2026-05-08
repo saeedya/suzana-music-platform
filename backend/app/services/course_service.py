@@ -32,6 +32,14 @@ def get_course_by_slug(db: Session, slug: str) -> CourseResponse | None:
         return None
     return CourseResponse.model_validate(course)
 
+def get_course_by_id(db: Session, course_id: str) -> CourseResponse | None:
+    course = db.query(Course).filter(
+        Course.id == course_id,
+        Course.is_active == True,  # noqa: E712
+    ).first()
+    if not course:
+        return None
+    return CourseResponse.model_validate(course)
 
 def create_course(db: Session, data: CourseCreate) -> CourseResponse:
     course = Course(**data.model_dump())

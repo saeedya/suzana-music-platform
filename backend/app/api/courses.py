@@ -9,6 +9,7 @@ from app.services.course_service import (
     create_course,
     delete_course,
     get_all_courses,
+    get_course_by_id,
     get_course_by_slug,
     get_courses_by_instrument,
     update_course,
@@ -28,6 +29,14 @@ def list_courses_by_instrument(
 ) -> list[CourseResponse]:
     return get_courses_by_instrument(db, instrument_id)
 
+@router.get("/id/{course_id}", response_model=CourseResponse)
+def get_course_by_id_route(
+    course_id: str, db: Session = Depends(get_db)
+) -> CourseResponse:
+    course = get_course_by_id(db, course_id)
+    if not course:
+        raise HTTPException(status_code=404, detail="Course not found")
+    return course
 
 @router.get("/{slug}", response_model=CourseResponse)
 def get_course(slug: str, db: Session = Depends(get_db)) -> CourseResponse:
