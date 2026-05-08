@@ -21,24 +21,41 @@
 
 ```
 src/
-├── app/                  # Pages (Next.js App Router)
-│   ├── page.tsx          # Landing page
-│   ├── layout.tsx        # Root layout
-│   ├── globals.css       # Global styles
+├── app/
+│   ├── page.tsx                    # Landing page
+│   ├── layout.tsx                  # Root layout
+│   ├── globals.css                 # Global styles
 │   ├── auth/
-│   │   ├── signin/       # Sign in page
-│   │   └── signup/       # Sign up page
-│   └── courses/          # Courses list page
+│   │   ├── signin/                 # Sign in page
+│   │   └── signup/                 # Sign up page
+│   ├── courses/
+│   │   ├── page.tsx                # Courses list
+│   │   └── [slug]/                 # Course detail
+│   ├── dashboard/                  # My bookings
+│   └── booking/
+│       ├── page.tsx                # 4-step booking wizard
+│       └── confirmation/           # Booking confirmation
 ├── components/
+│   ├── booking/
+│   │   ├── InstrumentStep.tsx
+│   │   ├── DurationStep.tsx
+│   │   ├── SlotStep.tsx
+│   │   └── PaymentStep.tsx
+│   ├── course/
+│   │   └── BookingButton.tsx
 │   └── layout/
-│       └── Navbar.tsx    # Navigation bar
+│       └── Navbar.tsx
 ├── context/
-│   └── AuthContext.tsx   # Auth state management
+│   └── AuthContext.tsx
 ├── lib/
-│   ├── api.ts            # axios client
-│   └── auth.ts           # Auth functions
+│   ├── api.ts                      # axios client
+│   ├── auth.ts                     # Auth functions
+│   ├── availability.ts             # Availability API
+│   ├── bookings.ts                 # Bookings API
+│   ├── courses.ts                  # Courses API
+│   └── instruments.ts              # Instruments API
 └── types/
-└── index.ts          # TypeScript interfaces
+└── index.ts                    # TypeScript interfaces
 ```
 
 ## Setup
@@ -53,28 +70,25 @@ npm run dev
 ## Environment variables
 
 NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 
 In production:
 
 NEXT_PUBLIC_API_URL=https://your-backend-url.railway.app
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
 
 ## Pages
 
 | Page | Path | Type | Description |
 |------|------|------|-------------|
 | Landing | `/` | Server | Hero + features |
-| Courses | `/courses` | Server | List all courses |
+| Courses | `/courses` | Server | List all courses with instrument filter |
+| Course detail | `/courses/[slug]` | Server | Course info + booking button |
 | Sign in | `/auth/signin` | Client | Login form |
 | Sign up | `/auth/signup` | Client | Register form |
-
-## Planned pages
-
-| Page | Path | Description |
-|------|------|-------------|
-| Course detail | `/courses/[slug]` | Course info + booking |
-| Dashboard | `/dashboard` | My bookings |
-| Booking | `/booking` | Book a lesson |
-| Booking | `/booking` | Client | 4-step booking wizard |
+| Dashboard | `/dashboard` | Client | My upcoming and past lessons |
+| Booking | `/booking` | Client | 4-step wizard: instrument → duration → slot → payment · instrument step skipped if courseId in URL |
+| Confirmation | `/booking/confirmation` | Client | Booking confirmed + join lesson link |
 
 ## Running in development
 
@@ -107,6 +121,7 @@ docker build -t music-platform-frontend .
 # Development (with local backend)
 docker run -p 3000:3000 \
   -e NEXT_PUBLIC_API_URL=http://$(hostname -I | awk '{print $1}'):8000 \
+  -e NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_... \
   music-platform-frontend
 ```
 
