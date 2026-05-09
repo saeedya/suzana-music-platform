@@ -9,6 +9,7 @@ import DurationStep from "@/components/booking/DurationStep";
 import SlotStep from "@/components/booking/SlotStep";
 import { getCourseById } from "@/lib/courses";
 import { getInstruments } from "@/lib/instruments";
+import PaymentStep from "@/components/booking/PaymentStep";
 
 const STEPS = ["Instrument", "Duration", "Date & Time", "Payment"];
 
@@ -144,12 +145,20 @@ export default function BookingPage() {
           onBack={prevStep}
         />
       )}
-
-      {step === 3 && (
-        <div className="text-center py-12">
-          <p className="text-gray-500">Payment step coming soon...</p>
-        </div>
-      )}
+    {step === 3 &&
+    selectedInstrument &&
+    selectedDuration &&
+    selectedSlot && (
+        <PaymentStep
+        instrument={selectedInstrument}
+        duration={selectedDuration}
+        slot={selectedSlot}
+        onSuccess={(bookingId) =>
+            router.push(`/booking/confirmation?bookingId=${bookingId}`)
+        }
+        onBack={prevStep}
+        />
+    )}
     </main>
   );
 }

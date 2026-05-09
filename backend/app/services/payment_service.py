@@ -2,6 +2,7 @@ import stripe
 
 from app.core.config import settings
 
+stripe.api_key = settings.stripe_secret_key
 
 def create_payment_intent(
     amount_cents: int,
