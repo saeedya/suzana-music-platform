@@ -57,3 +57,8 @@ def test_construct_webhook_event():
         from app.services.payment_service import construct_webhook_event
         result = construct_webhook_event(b"payload", "sig_header")
         assert result is not None
+
+def test_stripe_api_key_set_from_settings():
+    from app.core.stripe_client import stripe
+    from app.core.config import settings
+    assert stripe.api_key == settings.stripe_secret_key

@@ -58,7 +58,9 @@ Suzana is a professional musician with 30+ years of experience. This platform al
 | Sign in | `/auth/signin` | Client | Login form with show/hide password |
 | Sign up | `/auth/signup` | Client | Register form with password validation |
 | Dashboard | `/dashboard` | Client | My upcoming and past lessons |
-| Booking | `/booking` | Client | 4-step wizard: instrument → duration → slot → payment · instrument step skipped if courseId in URL |
+| Booking | `/booking` | Client | 4-step wizard: instrument → duration → slot → payment · instrument step 
+skipped if courseId in URL |
+| Confirmation | `/booking/confirmation` | Client | Booking confirmed + join lesson link |
 
 ### Infrastructure
 | Tool | Purpose |
@@ -213,13 +215,15 @@ All endpoints prefixed with `/api/v1/`.
 
 ### Private lesson booking
 ```
-1. POST /api/v1/bookings/
-2. FastAPI checks availability
-3. FastAPI creates Stripe PaymentIntent
-4. Student pays
-5. Stripe webhook → booking confirmed
-6. Daily.co room created
-7. Resend sends confirmation + room link
+1. Student selects instrument, duration, slot in booking wizard
+2. POST /api/v1/bookings/ → booking created (status: pending)
+3. POST /api/v1/payments/create-intent → Stripe PaymentIntent created
+4. Student pays via Stripe Payment Element
+5. Stripe fires payment_intent.succeeded webhook
+6. FastAPI webhook handler → booking status: confirmed
+7. Daily.co room created
+8. Resend sends confirmation email + room link to student and Suzana
+9. Student redirected to /booking/confirmation
 ```
 
 ### Subscription
@@ -294,7 +298,7 @@ All endpoints prefixed with `/api/v1/`.
 
 ## 8. Testing Strategy
 
-### Unit tests (173 tests · 95% coverage)
+### Unit tests (174 tests · 95% coverage)
 - Mock all external dependencies (DB, Supabase, Stripe)
 - Fast — run in under 5 seconds
 - Run on every push
